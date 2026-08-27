@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Employee Registration</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Employee Registration</h1>
+
+    <form th:action="@{/employees/save}"
+          th:object="${employee}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+
+        <!-- First Name -->
+
+        <label>First Name</label>
+
+        <input type="text"
+               th:field="*{firstName}"
+               placeholder="Enter first name"
+               required>
+
+
+        <!-- Last Name -->
+
+        <label>Last Name</label>
+
+        <input type="text"
+               th:field="*{lastName}"
+               placeholder="Enter last name"
+               required>
+
+
+        <!-- Email -->
+
+        <label>Email</label>
+
+        <input type="email"
+               th:field="*{email}"
+               placeholder="Enter email"
+               required>
+
+
+        <!-- Phone -->
+
+        <label>Phone</label>
+
+        <input type="text"
+               th:field="*{phone}"
+               placeholder="Enter phone number">
+
+
+        <!-- Position -->
+
+        <label>Position</label>
+
+        <input type="text"
+               th:field="*{position}"
+               placeholder="Enter position">
+
+
+        <!-- Attendance -->
+
+        <label>Attendance</label>
+
+        <select th:field="*{attendance}">
+
+            <option value="">Select Attendance</option>
+
+            <option value="PRESENT">
+                Present
+            </option>
+
+            <option value="ABSENT">
+                Absent
+            </option>
+
+        </select>
+
+
+        <!-- Leave -->
+
+        <label>Leave</label>
+
+        <select th:field="*{leave}">
+
+            <option value="">Select Leave Status</option>
+
+            <option value="NO">
+                No Leave
+            </option>
+
+            <option value="YES">
+                On Leave
+            </option>
+
+        </select>
+
+
+        <!-- Department -->
+
+        <label>Department</label>
+
+        <select th:field="*{department}">
+
+            <option value="">
+                Select Department
+            </option>
+
+            <option th:each="department : ${departments}"
+                    th:value="${department.id}"
+                    th:text="${department.name}">
+            </option>
+
+        </select>
+
+
+        <!-- Save -->
+
+        <button type="submit">
+            Save Employee
+        </button>
+
+    </form>
+
+
+    <a class="back" href="/employees">
+        Back to Staff Management
+    </a>
+
+</div>
+
+</body>
+
+</html>

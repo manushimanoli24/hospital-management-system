@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Patient Details</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f6fa;
+        }
+
+        .header {
+            background: #1e3a5f;
+            color: white;
+            padding: 20px 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .label {
+            width: 200px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .value {
+            flex: 1;
+        }
+
+        .history {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            background: #1e3a5f;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Hospital Management System</h1>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Patient Details</h2>
+
+
+        <div class="row">
+
+            <div class="label">
+                Patient ID
+            </div>
+
+            <div class="value"
+                 th:text="${patient.id}">
+                1
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="label">
+                Name
+            </div>
+
+            <div class="value"
+                 th:text="${patient.name}">
+                John
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="label">
+                Phone
+            </div>
+
+            <div class="value"
+                 th:text="${patient.phone}">
+                0771234567
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="label">
+                Gender
+            </div>
+
+            <div class="value"
+                 th:text="${patient.gender}">
+                Male
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="label">
+                Date of Birth
+            </div>
+
+            <div class="value"
+                 th:text="${patient.dateOfBirth}">
+                2000-01-01
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="label">
+                Address
+            </div>
+
+            <div class="value"
+                 th:text="${patient.address}">
+                Colombo
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="label">
+                Email
+            </div>
+
+            <div class="value"
+                 th:text="${patient.email}">
+                john@example.com
+            </div>
+
+        </div>
+
+
+        <h3>Medical History</h3>
+
+        <div class="history"
+             th:text="${patient.medicalHistory}">
+
+            No medical history available.
+
+        </div>
+
+
+        <a href="/patients"
+           class="back">
+            Back to Patients
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

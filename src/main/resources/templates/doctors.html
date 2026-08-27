@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Management</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f6fa;
+        }
+
+        .header {
+            background: #1e3a5f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 92%;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button,
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            background: #1e3a5f;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #e8eef5;
+        }
+
+        .actions a {
+            margin-right: 5px;
+        }
+
+        .delete {
+            background: #c0392b;
+        }
+
+        .view {
+            background: #2980b9;
+        }
+
+        .edit {
+            background: #f39c12;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>👨‍⚕️ Doctor Management</h1>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="top-section">
+
+            <form action="/doctors" method="get">
+
+                <input
+                        type="text"
+                        name="search"
+                        placeholder="Search Doctor..."
+                        th:value="${search}">
+
+                <button type="submit">
+                    🔍 Search
+                </button>
+
+            </form>
+
+            <a href="/doctors/add" class="btn">
+                ➕ Add Doctor
+            </a>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Specialization</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Schedule</th>
+                <th>Actions</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="doctor : ${doctors}">
+
+                <td th:text="${doctor.id}"></td>
+
+                <td>
+                    <span th:text="${doctor.firstName}"></span>
+                    <span th:text="${doctor.lastName}"></span>
+                </td>
+
+                <td th:text="${doctor.specialization}"></td>
+
+                <td th:text="${doctor.phone}"></td>
+
+                <td th:text="${doctor.email}"></td>
+
+                <td th:text="${doctor.department}"></td>
+
+                <td th:text="${doctor.schedule}"></td>
+
+                <td class="actions">
+
+                    <a class="btn view"
+                       th:href="@{/doctors/view/{id}(id=${doctor.id})}">
+                        👁 View
+                    </a>
+
+                    <a class="btn edit"
+                       th:href="@{/doctors/edit/{id}(id=${doctor.id})}">
+                        ✏ Edit
+                    </a>
+
+                    <a class="btn delete"
+                       th:href="@{/doctors/delete/{id}(id=${doctor.id})}"
+                       onclick="return confirm('Are you sure you want to delete this doctor?');">
+                        🗑 Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(doctors)}">
+
+                <td colspan="8" style="text-align:center;">
+                    No doctors found.
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

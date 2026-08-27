@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Edit Bill</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .cancel {
+            background-color: #777;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Edit Bill</h1>
+
+    <form th:action="@{/billing/update}"
+          th:object="${billing}"
+          method="post">
+
+        <!-- Bill ID -->
+        <input type="hidden"
+               th:field="*{id}">
+
+        <!-- Patient ID -->
+        <input type="hidden"
+               th:field="*{patientId}">
+
+
+        <label>Patient Name</label>
+
+        <input type="text"
+               th:field="*{patientName}"
+               required>
+
+
+        <label>Consultation Charge</label>
+
+        <input type="number"
+               step="0.01"
+               th:field="*{consultationCharge}"
+               required>
+
+
+        <label>Laboratory Charge</label>
+
+        <input type="number"
+               step="0.01"
+               th:field="*{laboratoryCharge}"
+               required>
+
+
+        <label>Pharmacy Charge</label>
+
+        <input type="number"
+               step="0.01"
+               th:field="*{pharmacyCharge}"
+               required>
+
+
+        <label>Admission Charge</label>
+
+        <input type="number"
+               step="0.01"
+               th:field="*{admissionCharge}"
+               required>
+
+
+        <label>Payment</label>
+
+        <input type="number"
+               step="0.01"
+               th:field="*{payment}"
+               required>
+
+
+        <label>Billing Date</label>
+
+        <input type="date"
+               th:field="*{billingDate}">
+
+
+        <label>Status</label>
+
+        <select th:field="*{paymentStatus}">
+
+            <option value="PENDING">
+                PENDING
+            </option>
+
+            <option value="PAID">
+                PAID
+            </option>
+
+            <option value="PARTIALLY PAID">
+                PARTIALLY PAID
+            </option>
+
+            <option value="UNPAID">
+                UNPAID
+            </option>
+
+        </select>
+
+
+        <button type="submit"
+                class="save">
+
+            Update Bill
+
+        </button>
+
+
+        <a href="/billing"
+           class="cancel">
+
+            Cancel
+
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

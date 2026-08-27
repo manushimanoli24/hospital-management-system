@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Add Medicine</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 80px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Add Medicine</h1>
+
+    <form
+        th:action="@{/pharmacy/save}"
+        th:object="${medicine}"
+        method="post">
+
+        <!-- Medicine Name -->
+
+        <label>
+            Medicine Name
+        </label>
+
+        <input
+            type="text"
+            th:field="*{name}"
+            required>
+
+
+        <!-- Description -->
+
+        <label>
+            Description
+        </label>
+
+        <textarea
+            th:field="*{description}">
+        </textarea>
+
+
+        <!-- Category -->
+
+        <label>
+            Category
+        </label>
+
+        <input
+            type="text"
+            th:field="*{category}">
+
+
+        <!-- Stock -->
+
+        <label>
+            Stock
+        </label>
+
+        <input
+            type="number"
+            th:field="*{stock}"
+            min="0"
+            required>
+
+
+        <!-- Price -->
+
+        <label>
+            Price
+        </label>
+
+        <input
+            type="number"
+            th:field="*{price}"
+            min="0"
+            step="0.01"
+            required>
+
+
+        <!-- Expiry Date -->
+
+        <label>
+            Expiry Date
+        </label>
+
+        <input
+            type="date"
+            th:field="*{expiryDate}"
+            required>
+
+
+        <!-- Save -->
+
+        <button type="submit">
+            Save Medicine
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

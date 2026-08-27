@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Medical Records</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .add-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            background-color: white;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Medical Records</h1>
+
+    <a
+        href="/medical-records/add"
+        class="add-button">
+
+        + Add Medical Record
+
+    </a>
+
+</div>
+
+
+<table>
+
+    <thead>
+
+    <tr>
+
+        <th>Patient</th>
+        <th>Diagnosis</th>
+        <th>Treatment</th>
+        <th>Prescription</th>
+        <th>Medical Report</th>
+        <th>Date</th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+    <tr
+        th:each="record : ${medicalRecords}">
+
+        <td th:text="${record.patientId}">
+            Patient
+        </td>
+
+        <td th:text="${record.diagnosis}">
+            Diagnosis
+        </td>
+
+        <td th:text="${record.treatment}">
+            Treatment
+        </td>
+
+        <td th:text="${record.prescription}">
+            Prescription
+        </td>
+
+        <td th:text="${record.medicalReport}">
+            Medical Report
+        </td>
+
+        <td th:text="${record.recordDate}">
+            Date
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+
+</html>

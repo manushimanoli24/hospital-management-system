@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Add Doctor</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f6fa;
+        }
+
+        .header {
+            background: #1e3a5f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 700px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #1e3a5f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>➕ Add Doctor</h1>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <form th:action="@{/doctors/add}"
+              th:object="${doctor}"
+              method="post">
+
+            <div class="form-group">
+
+                <label>First Name</label>
+
+                <input type="text"
+                       th:field="*{firstName}"
+                       required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Last Name</label>
+
+                <input type="text"
+                       th:field="*{lastName}"
+                       required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Specialization</label>
+
+                <input type="text"
+                       th:field="*{specialization}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Phone</label>
+
+                <input type="text"
+                       th:field="*{phone}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input type="email"
+                       th:field="*{email}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <input type="text"
+                       th:field="*{department}">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Schedule</label>
+
+                <input type="text"
+                       th:field="*{schedule}"
+                       placeholder="Monday - Friday, 8:00 AM - 4:00 PM">
+
+            </div>
+
+            <button type="submit">
+                💾 Save Doctor
+            </button>
+
+        </form>
+
+        <a href="/doctors" class="back">
+            ← Back to Doctors
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

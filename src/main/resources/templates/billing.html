@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Billing Management</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            background-color: white;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .add-button,
+        .receipt-button,
+        .edit-button,
+        .delete-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        .add-button:hover,
+        .receipt-button:hover,
+        .edit-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .delete-button {
+            background-color: #dc2626;
+        }
+
+        .delete-button:hover {
+            background-color: #b91c1c;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .pending {
+            color: orange;
+        }
+
+        .paid {
+            color: green;
+        }
+
+        .partially-paid {
+            color: #d97706;
+        }
+
+        .cancelled {
+            color: red;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Billing Management</h1>
+
+    <a
+        href="/billing/add"
+        class="add-button">
+
+        + Create Bill
+
+    </a>
+
+</div>
+
+
+<table>
+
+    <thead>
+
+    <tr>
+
+        <th>ID</th>
+
+        <th>Patient</th>
+
+        <th>Consultation</th>
+
+        <th>Laboratory</th>
+
+        <th>Pharmacy</th>
+
+        <th>Admission</th>
+
+        <th>Total</th>
+
+        <th>Payment</th>
+
+        <th>Billing Date</th>
+
+        <th>Status</th>
+
+        <th>Action</th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+    <tr th:each="billing : ${billings}">
+
+        <td th:text="${billing.id}">
+            1
+        </td>
+
+
+        <td th:text="${billing.patientName}">
+            John Perera
+        </td>
+
+
+        <td th:text="${billing.consultationCharge}">
+            2000
+        </td>
+
+
+        <td th:text="${billing.laboratoryCharge}">
+            3500
+        </td>
+
+
+        <td th:text="${billing.pharmacyCharge}">
+            1500
+        </td>
+
+
+        <td th:text="${billing.admissionCharge}">
+            5000
+        </td>
+
+
+        <td th:text="${billing.total}">
+            12000
+        </td>
+
+
+        <td th:text="${billing.payment}">
+            12000
+        </td>
+
+
+        <td th:text="${billing.billingDate}">
+            2026-08-23
+        </td>
+
+
+        <td>
+
+            <span
+                class="status"
+                th:classappend="${billing.paymentStatus == 'PENDING'} ? ' pending' :
+                                (${billing.paymentStatus == 'PAID'} ? ' paid' :
+                                (${billing.paymentStatus == 'PARTIALLY_PAID'} ? ' partially-paid' :
+                                (${billing.paymentStatus == 'CANCELLED'} ? ' cancelled' : ''))) "
+                th:text="${billing.paymentStatus}">
+
+                PENDING
+
+            </span>
+
+        </td>
+
+
+        <td>
+
+            <!-- Edit Bill -->
+
+            <a
+                class="edit-button"
+                th:href="@{/billing/edit/{id}(id=${billing.id})}">
+
+                Edit
+
+            </a>
+
+
+            <!-- Print Receipt -->
+
+            <a
+                class="receipt-button"
+                th:href="@{/billing/receipt/{id}(id=${billing.id})}">
+
+                Print Receipt
+
+            </a>
+
+
+            <!-- Delete Bill -->
+
+            <a
+                class="delete-button"
+                th:href="@{/billing/delete/{id}(id=${billing.id})}"
+                onclick="return confirm('Are you sure you want to delete this bill?');">
+
+                Delete
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+
+</html>

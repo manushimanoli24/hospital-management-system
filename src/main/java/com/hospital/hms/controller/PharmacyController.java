@@ -1,0 +1,137 @@
+package com.hospital.hms.controller;
+
+import com.hospital.hms.entity.Medicine;
+import com.hospital.hms.repository.MedicineRepository;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/pharmacy")
+public class PharmacyController {
+
+    private final MedicineRepository medicineRepository;
+
+    public PharmacyController(MedicineRepository medicineRepository) {
+        this.medicineRepository = medicineRepository;
+    }
+
+    // Pharmacy page - View all medicines
+    @GetMapping
+    public String pharmacy(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String category,
+            Model model) {
+
+        if (name == null) {
+            name = "";
+        }
+
+        if (category == null) {
+            category = "";
+        }
+
+        if (!name.isEmpty() && !category.isEmpty()) {
+
+            model.addAttribute(
+                    "medicines",
+                    medicineRepository
+                            .findByNameContainingIgnoreCaseAndCategoryContainingIgnoreCase(
+                                    name,
+                                    category
+                            )
+            );
+
+        } else if (!name.isEmpty()) {
+
+            model.addAttribute(
+                    "medicines",
+                    medicineRepository.findByNameContainingIgnoreCase(name)
+            );
+
+        } else if (!category.isEmpty()) {
+
+            model.addAttribute(
+                    "medicines",
+                    medicineRepository.findByCategoryContainingIgnoreCase(category)
+            );
+
+        } else {
+
+            model.addAttribute(
+                    "medicines",
+                    medicineRepository.findAll()
+            );
+        }
+
+        model.addAttribute("searchName", name);
+        model.addAttribute("searchCategory", category);
+
+        return "pharmacy";
+    }
+
+    // Add medicine page
+    @GetMapping("/add")
+    public String addMedicine(Model model) {
+
+        model.addAttribute(
+                "medicine",
+                new Medicine()
+        );
+
+        return "add-medicine";
+    }
+
+    // Save medicine
+    @PostMapping("/save")
+    public String saveMedicine(
+            @ModelAttribute Medicine medicine) {
+
+        medicineRepository.save(medicine);
+
+        return "redirect:/pharmacy";
+    }
+
+    // Edit medicine page
+    @GetMapping("/edit/{id}")
+    public String editMedicine(
+            @PathVariable Long id,
+            Model model) {
+
+        Medicine medicine = medicineRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Invalid medicine ID: " + id
+                        )
+                );
+
+        model.addAttribute("medicine", medicine);
+
+        return "edit-medicine";
+    }
+
+    // Update medicine
+    @PostMapping("/update/{id}")
+    public String updateMedicine(
+            @PathVariable Long id,
+            @ModelAttribute Medicine medicine) {
+
+        medicine.setId(id);
+
+        medicineRepository.save(medicine);
+
+        return "redirect:/pharmacy";
+    }
+
+    // Delete medicine
+    @GetMapping("/delete/{id}")
+    public String deleteMedicine(
+            @PathVariable Long id) {
+
+        medicineRepository.deleteById(id);
+
+        return "redirect:/pharmacy";
+    }
+}

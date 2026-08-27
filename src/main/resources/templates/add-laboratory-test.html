@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Add Laboratory Test</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .back {
+            background-color: #ddd;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Add Laboratory Test</h1>
+
+    <form
+        th:action="@{/laboratory/save}"
+        th:object="${laboratoryTest}"
+        method="post">
+
+        <!-- Patient -->
+
+        <label>Patient</label>
+
+        <select
+            th:field="*{patientId}"
+            required>
+
+            <option value="">
+                Select Patient
+            </option>
+
+            <option
+                th:each="patient : ${patients}"
+                th:value="${patient.id}"
+                th:text="${patient.firstName + ' ' + patient.lastName}">
+            </option>
+
+        </select>
+
+
+        <!-- Doctor -->
+
+        <label>Doctor</label>
+
+        <select
+            th:field="*{doctorId}"
+            required>
+
+            <option value="">
+                Select Doctor
+            </option>
+
+            <option
+                th:each="doctor : ${doctors}"
+                th:value="${doctor.id}"
+                th:text="${doctor.firstName + ' ' + doctor.lastName}">
+            </option>
+
+        </select>
+
+
+        <!-- Test Name -->
+
+        <label>Test Name</label>
+
+        <input
+            type="text"
+            th:field="*{testName}"
+            placeholder="Example: Blood Test"
+            required>
+
+
+        <!-- Sample -->
+
+        <label>Sample</label>
+
+        <input
+            type="text"
+            th:field="*{sample}"
+            placeholder="Example: Blood">
+
+
+        <!-- Result -->
+
+        <label>Result</label>
+
+        <textarea
+            th:field="*{result}"
+            placeholder="Enter laboratory result">
+        </textarea>
+
+
+        <!-- Date -->
+
+        <label>Date</label>
+
+        <input
+            type="date"
+            th:field="*{testDate}"
+            required>
+
+
+        <!-- Status -->
+
+        <label>Status</label>
+
+        <select th:field="*{status}">
+
+            <option value="REQUESTED">
+                REQUESTED
+            </option>
+
+            <option value="SAMPLE_COLLECTED">
+                SAMPLE COLLECTED
+            </option>
+
+            <option value="RESULT_ENTERED">
+                RESULT ENTERED
+            </option>
+
+            <option value="COMPLETED">
+                COMPLETED
+            </option>
+
+        </select>
+
+
+        <button
+            type="submit"
+            class="save">
+
+            Save Laboratory Test
+
+        </button>
+
+    </form>
+
+
+    <form
+        action="/laboratory"
+        method="get">
+
+        <button
+            type="submit"
+            class="back">
+
+            Back to Laboratory
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

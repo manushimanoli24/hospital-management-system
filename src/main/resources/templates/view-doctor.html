@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>View Doctor</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f6fa;
+        }
+
+        .header {
+            background: #1e3a5f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 700px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .row {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+    <h1>👁 Doctor Details</h1>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="row">
+            <span class="label">ID:</span>
+            <span th:text="${doctor.id}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">First Name:</span>
+            <span th:text="${doctor.firstName}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">Last Name:</span>
+            <span th:text="${doctor.lastName}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">Specialization:</span>
+            <span th:text="${doctor.specialization}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">Phone:</span>
+            <span th:text="${doctor.phone}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">Email:</span>
+            <span th:text="${doctor.email}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">Department:</span>
+            <span th:text="${doctor.department}"></span>
+        </div>
+
+        <div class="row">
+            <span class="label">Schedule:</span>
+            <span th:text="${doctor.schedule}"></span>
+        </div>
+
+        <br>
+
+        <a th:href="@{/doctors/edit/{id}(id=${doctor.id})}">
+            ✏️ Edit Doctor
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a href="/doctors">
+            ← Back
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

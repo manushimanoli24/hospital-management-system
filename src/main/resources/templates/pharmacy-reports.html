@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Pharmacy Reports</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1e3a5f;
+        }
+
+        .back-button {
+            background-color: #555;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+        }
+
+        .reports {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #555;
+            font-size: 20px;
+        }
+
+        .number {
+            font-size: 40px;
+            font-weight: bold;
+            color: #1e3a5f;
+            margin-top: 15px;
+        }
+
+        .description {
+            color: #777;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+
+            .reports {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>Pharmacy Reports</h1>
+
+        <a href="/reports"
+           class="back-button">
+            Back to Reports
+        </a>
+
+    </div>
+
+
+    <!-- Report Cards -->
+
+    <div class="reports">
+
+
+        <!-- Total Medicines -->
+
+        <div class="card">
+
+            <h2>Total Medicines</h2>
+
+            <div class="number"
+                 th:text="${totalMedicines}">
+
+                0
+
+            </div>
+
+            <div class="description">
+
+                Total medicines registered
+
+            </div>
+
+        </div>
+
+
+        <!-- Available Stock -->
+
+        <div class="card">
+
+            <h2>Available Stock</h2>
+
+            <div class="number"
+                 th:text="${availableStock}">
+
+                0
+
+            </div>
+
+            <div class="description">
+
+                Total medicine units available
+
+            </div>
+
+        </div>
+
+
+        <!-- Low Stock -->
+
+        <div class="card">
+
+            <h2>Low Stock Medicines</h2>
+
+            <div class="number"
+                 th:text="${lowStockMedicines}">
+
+                0
+
+            </div>
+
+            <div class="description">
+
+                Medicines with stock of 10 or less
+
+            </div>
+
+        </div>
+
+
+        <!-- Expired Medicines -->
+
+        <div class="card">
+
+            <h2>Expired Medicines</h2>
+
+            <div class="number"
+                 th:text="${expiredMedicines}">
+
+                0
+
+            </div>
+
+            <div class="description">
+
+                Medicines past their expiry date
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

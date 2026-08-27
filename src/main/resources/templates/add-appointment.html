@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Add Appointment</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+        }
+
+        .book-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Add Appointment</h1>
+
+    <form
+        th:action="@{/appointments/book}"
+        th:object="${appointment}"
+        method="post">
+
+        <label>Patient</label>
+
+        <select th:field="*{patientId}" required>
+
+            <option value="">Select Patient</option>
+
+            <option
+                th:each="patient : ${patients}"
+                th:value="${patient.id}"
+                th:text="${patient.firstName + ' ' + patient.lastName}">
+            </option>
+
+        </select>
+
+
+        <label>Doctor</label>
+
+        <select th:field="*{doctorId}" required>
+
+            <option value="">Select Doctor</option>
+
+            <option
+                th:each="doctor : ${doctors}"
+                th:value="${doctor.id}"
+                th:text="${doctor.firstName + ' ' + doctor.lastName}">
+            </option>
+
+        </select>
+
+
+        <label>Department</label>
+
+        <select th:field="*{departmentId}" required>
+
+            <option value="">Select Department</option>
+
+            <option
+                th:each="department : ${departments}"
+                th:value="${department.id}"
+                th:text="${department.name}">
+            </option>
+
+        </select>
+
+
+        <label>Date</label>
+
+        <input
+            type="date"
+            th:field="*{appointmentDate}"
+            required>
+
+
+        <label>Time</label>
+
+        <input
+            type="time"
+            th:field="*{appointmentTime}"
+            required>
+
+
+        <button
+            type="submit"
+            class="book-button">
+
+            Book Appointment
+
+        </button>
+
+    </form>
+
+
+    <form action="/appointments" method="get">
+
+        <button
+            type="submit"
+            class="back-button">
+
+            Back to Appointments
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

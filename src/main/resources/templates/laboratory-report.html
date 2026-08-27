@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Laboratory Report</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .report {
+            width: 700px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .line {
+            border-bottom: 1px solid #ddd;
+            padding: 12px 0;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f5f9;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="report">
+
+    <h1>Laboratory Report</h1>
+
+    <div class="line">
+        <strong>Patient ID:</strong>
+        <span th:text="${laboratoryTest.patientId}"></span>
+    </div>
+
+    <div class="line">
+        <strong>Doctor ID:</strong>
+        <span th:text="${laboratoryTest.doctorId}"></span>
+    </div>
+
+    <div class="line">
+        <strong>Test Name:</strong>
+        <span th:text="${laboratoryTest.testName}"></span>
+    </div>
+
+    <div class="line">
+        <strong>Sample:</strong>
+        <span th:text="${laboratoryTest.sample}"></span>
+    </div>
+
+    <div class="line">
+        <strong>Date:</strong>
+        <span th:text="${laboratoryTest.testDate}"></span>
+    </div>
+
+    <div class="line">
+        <strong>Status:</strong>
+        <span th:text="${laboratoryTest.status}"></span>
+    </div>
+
+    <div class="result">
+
+        <strong>Laboratory Result:</strong>
+
+        <p th:text="${laboratoryTest.result}">
+            Result
+        </p>
+
+    </div>
+
+    <button onclick="window.print()">
+        Print Report
+    </button>
+
+    <a href="/laboratory">
+        <button type="button">
+            Back to Laboratory
+        </button>
+    </a>
+
+</div>
+
+</body>
+
+</html>

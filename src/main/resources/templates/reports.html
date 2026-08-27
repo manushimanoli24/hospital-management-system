@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Reports</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background-color: #555;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 5px;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .report-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .report-card h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .report-btn {
+            display: inline-block;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .report-btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Reports</h1>
+
+        <a href="/dashboard" class="back-btn">
+            Back to Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="reports-grid">
+
+        <!-- Patient Reports -->
+
+        <div class="report-card">
+
+            <h2>Patient Reports</h2>
+
+            <a href="/reports/patients" class="report-btn">
+                View Report
+            </a>
+
+        </div>
+
+
+        <!-- Appointment Reports -->
+
+        <div class="report-card">
+
+            <h2>Appointment Reports</h2>
+
+            <a href="/reports/appointments" class="report-btn">
+                View Report
+            </a>
+
+        </div>
+
+
+        <!-- Revenue Reports -->
+
+        <div class="report-card">
+
+            <h2>Revenue Reports</h2>
+
+            <a href="/reports/revenue" class="report-btn">
+                View Report
+            </a>
+
+        </div>
+
+
+        <!-- Pharmacy Reports -->
+
+        <div class="report-card">
+
+            <h2>Pharmacy Reports</h2>
+
+            <a href="/reports/pharmacy" class="report-btn">
+                View Report
+            </a>
+
+        </div>
+
+
+        <!-- Laboratory Reports -->
+
+        <div class="report-card">
+
+            <h2>Laboratory Reports</h2>
+
+            <a href="/reports/laboratory" class="report-btn">
+                View Report
+            </a>
+
+        </div>
+
+
+        <!-- Staff Reports -->
+
+        <div class="report-card">
+
+            <h2>Staff Reports</h2>
+
+            <a href="/reports/staff" class="report-btn">
+                View Report
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

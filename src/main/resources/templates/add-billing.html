@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Create Hospital Bill</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .container {
+            width: 500px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Create Hospital Bill</h1>
+
+    <form
+        th:action="@{/billing/save}"
+        th:object="${billing}"
+        method="post">
+
+        <!-- Patient ID -->
+
+        <label>
+            Patient ID
+        </label>
+
+        <input
+            type="number"
+            th:field="*{patientId}"
+            min="1"
+            required>
+
+        <!-- Patient Name -->
+
+        <label>
+            Patient Name
+        </label>
+
+        <input
+            type="text"
+            th:field="*{patientName}"
+            required>
+
+        <!-- Consultation -->
+
+        <label>
+            Consultation Charge
+        </label>
+
+        <input
+            type="number"
+            th:field="*{consultationCharge}"
+            min="0"
+            step="0.01"
+            required>
+
+        <!-- Laboratory -->
+
+        <label>
+            Laboratory Charge
+        </label>
+
+        <input
+            type="number"
+            th:field="*{laboratoryCharge}"
+            min="0"
+            step="0.01"
+            required>
+
+        <!-- Pharmacy -->
+
+        <label>
+            Pharmacy Charge
+        </label>
+
+        <input
+            type="number"
+            th:field="*{pharmacyCharge}"
+            min="0"
+            step="0.01"
+            required>
+
+        <!-- Admission -->
+
+        <label>
+            Admission Charge
+        </label>
+
+        <input
+            type="number"
+            th:field="*{admissionCharge}"
+            min="0"
+            step="0.01"
+            required>
+
+        <!-- Payment -->
+
+        <label>
+            Payment
+        </label>
+
+        <input
+            type="number"
+            th:field="*{payment}"
+            min="0"
+            step="0.01"
+            required>
+
+        <button type="submit">
+            Create Bill
+        </button>
+
+    </form>
+
+    <a href="/billing" class="back-button">
+        ← Back to Billing
+    </a>
+
+</div>
+
+</body>
+
+</html>

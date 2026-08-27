@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Hospital Bill</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            padding: 40px;
+        }
+
+        .receipt {
+            width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .hospital-name {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .bill-info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .total {
+            border-top: 2px solid black;
+            font-weight: bold;
+            font-size: 20px;
+            padding-top: 15px;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .print-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #777;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        @media print {
+
+            body {
+                background-color: white;
+                padding: 0;
+            }
+
+            .receipt {
+                width: 100%;
+                box-shadow: none;
+            }
+
+            .print-button,
+            .back-button {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="receipt">
+
+    <h1>HOSPITAL BILL</h1>
+
+    <div class="hospital-name">
+        Hospital Management System
+    </div>
+
+
+    <!-- Bill Information -->
+
+    <div class="bill-info">
+
+        <div class="info-row">
+
+            <strong>Bill ID:</strong>
+
+            <span th:text="${billing.id}">
+                1
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <strong>Patient ID:</strong>
+
+            <span th:text="${billing.patientId}">
+                5
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <strong>Patient:</strong>
+
+            <span th:text="${billing.patientName}">
+                John Perera
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <strong>Billing Date:</strong>
+
+            <span th:text="${billing.billingDate}">
+                2026-08-26
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Consultation -->
+
+    <div class="row">
+
+        <span>Consultation</span>
+
+        <span>
+
+            Rs.
+
+            <span th:text="${billing.consultationCharge}">
+                2000
+            </span>
+
+        </span>
+
+    </div>
+
+
+    <!-- Laboratory -->
+
+    <div class="row">
+
+        <span>Laboratory</span>
+
+        <span>
+
+            Rs.
+
+            <span th:text="${billing.laboratoryCharge}">
+                3500
+            </span>
+
+        </span>
+
+    </div>
+
+
+    <!-- Pharmacy -->
+
+    <div class="row">
+
+        <span>Pharmacy</span>
+
+        <span>
+
+            Rs.
+
+            <span th:text="${billing.pharmacyCharge}">
+                1500
+            </span>
+
+        </span>
+
+    </div>
+
+
+    <!-- Admission -->
+
+    <div class="row">
+
+        <span>Admission</span>
+
+        <span>
+
+            Rs.
+
+            <span th:text="${billing.admissionCharge}">
+                5000
+            </span>
+
+        </span>
+
+    </div>
+
+
+    <!-- Total -->
+
+    <div class="row total">
+
+        <span>TOTAL</span>
+
+        <span>
+
+            Rs.
+
+            <span th:text="${billing.total}">
+                12000
+            </span>
+
+        </span>
+
+    </div>
+
+
+    <!-- Payment -->
+
+    <div class="row">
+
+        <span>Payment</span>
+
+        <span>
+
+            Rs.
+
+            <span th:text="${billing.payment}">
+                12000
+            </span>
+
+        </span>
+
+    </div>
+
+
+    <!-- Payment Status -->
+
+    <div class="row">
+
+        <span>Payment Status</span>
+
+        <span
+            class="status"
+            th:text="${billing.paymentStatus}">
+
+            PAID
+
+        </span>
+
+    </div>
+
+
+    <!-- Print -->
+
+    <button
+        class="print-button"
+        onclick="window.print()">
+
+        Print Receipt
+
+    </button>
+
+
+    <!-- Back -->
+
+    <a
+        href="/billing"
+        class="back-button">
+
+        Back to Billing
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

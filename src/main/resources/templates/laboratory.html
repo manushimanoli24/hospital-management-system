@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Laboratory Management</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .add-button {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+            background-color: white;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #2563eb;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 2px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result-button {
+            background-color: #2563eb;
+        }
+
+        .report-button {
+            background-color: #7c3aed;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Laboratory Management</h1>
+
+    <a
+        href="/laboratory/add"
+        class="add-button">
+
+        + Add Laboratory Test
+
+    </a>
+
+</div>
+
+
+<table>
+
+    <thead>
+
+    <tr>
+
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Test Name</th>
+        <th>Sample</th>
+        <th>Result</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+    <tr th:each="test : ${laboratoryTests}">
+
+        <!-- Patient -->
+
+        <td th:text="${test.patientId}">
+            Patient
+        </td>
+
+
+        <!-- Doctor -->
+
+        <td th:text="${test.doctorId}">
+            Doctor
+        </td>
+
+
+        <!-- Test Name -->
+
+        <td th:text="${test.testName}">
+            Test Name
+        </td>
+
+
+        <!-- Sample -->
+
+        <td th:text="${test.sample}">
+            Sample
+        </td>
+
+
+        <!-- Result -->
+
+        <td th:text="${test.result}">
+            Result
+        </td>
+
+
+        <!-- Date -->
+
+        <td th:text="${test.testDate}">
+            Date
+        </td>
+
+
+        <!-- Status -->
+
+        <td th:text="${test.status}">
+            Status
+        </td>
+
+
+        <!-- Actions -->
+
+        <td>
+
+            <!-- Collect Sample -->
+
+            <form
+                th:if="${test.status == 'REQUESTED'}"
+                th:action="@{/laboratory/collect/{id}(id=${test.id})}"
+                method="post">
+
+                <button type="submit">
+                    Collect Sample
+                </button>
+
+            </form>
+
+
+            <!-- Enter Result -->
+
+            <a
+                th:if="${test.status == 'SAMPLE_COLLECTED'}"
+                th:href="@{/laboratory/result/{id}(id=${test.id})}">
+
+                <button
+                    type="button"
+                    class="result-button">
+
+                    Enter Result
+
+                </button>
+
+            </a>
+
+
+            <!-- Generate Report -->
+
+            <a
+                th:if="${test.status == 'RESULT_ENTERED'}"
+                th:href="@{/laboratory/report/{id}(id=${test.id})}">
+
+                <button
+                    type="button"
+                    class="report-button">
+
+                    Generate Report
+
+                </button>
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+
+</body>
+
+</html>
