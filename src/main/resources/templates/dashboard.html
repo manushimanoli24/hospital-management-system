@@ -27,10 +27,34 @@
             background-color: #1e3a5f;
             color: white;
             padding: 20px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .header h1 {
             font-size: 28px;
+        }
+
+        /* Logout Button */
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
         }
 
         .container {
@@ -105,6 +129,14 @@
                 grid-template-columns: 1fr;
             }
 
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .logout-button {
+                padding: 8px 14px;
+            }
+
         }
 
     </style>
@@ -117,7 +149,24 @@
 
     <div class="header">
 
-        <h1>Hospital Management System</h1>
+        <h1>
+            Hospital Management System
+        </h1>
+
+        <!-- Logout -->
+
+        <form th:action="@{/logout}"
+              method="post"
+              class="logout-form">
+
+            <button type="submit"
+                    class="logout-button">
+
+                Logout
+
+            </button>
+
+        </form>
 
     </div>
 
@@ -153,11 +202,15 @@
 
                 <div class="number"
                      th:text="${totalPatients}">
+
                     250
+
                 </div>
 
                 <div class="description">
+
                     Registered patients
+
                 </div>
 
             </div>
@@ -171,11 +224,15 @@
 
                 <div class="number"
                      th:text="${todayAppointments}">
+
                     35
+
                 </div>
 
                 <div class="description">
+
                     Appointments scheduled today
+
                 </div>
 
             </div>
@@ -192,13 +249,17 @@
                     Rs.
 
                     <span th:text="${revenue}">
+
                         250000
+
                     </span>
 
                 </div>
 
                 <div class="description">
+
                     Total revenue
+
                 </div>
 
             </div>
@@ -212,11 +273,15 @@
 
                 <div class="number"
                      th:text="${laboratoryRequests}">
+
                     12
+
                 </div>
 
                 <div class="description">
+
                     Pending laboratory requests
+
                 </div>
 
             </div>
@@ -229,12 +294,16 @@
                 <h3>Reports</h3>
 
                 <div class="description">
+
                     View hospital reports
+
                 </div>
 
                 <a href="/reports"
                    class="reports-button">
+
                     View Reports
+
                 </a>
 
             </div>
