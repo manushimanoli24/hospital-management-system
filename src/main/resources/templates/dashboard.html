@@ -1,317 +1,641 @@
 <!DOCTYPE html>
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Hospital Management System - Dashboard</title>
+<title>Hospital Management System - Dashboard</title>
 
-    <style>
+<style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background-color: #f4f6f9;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+        background-color: #1e3a5f;
+        color: white;
+        padding: 20px 30px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    /* ================= LOGOUT ================= */
+
+    .logout-form {
+        margin: 0;
+    }
+
+    .logout-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .logout-button:hover {
+        background-color: #c82333;
+    }
+
+    /* ================= CONTAINER ================= */
+
+    .container {
+        padding: 30px;
+    }
+
+    /* ================= WELCOME ================= */
+
+    .welcome {
+        margin-bottom: 30px;
+    }
+
+    .welcome h2 {
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .welcome p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    /* ================= SUMMARY CARDS ================= */
+
+    .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background-color: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        min-height: 140px;
+    }
+
+    .card h3 {
+        color: #555;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .card .number {
+        font-size: 35px;
+        font-weight: bold;
+        color: #1e3a5f;
+    }
+
+    .card .description {
+        margin-top: 8px;
+        color: #777;
+    }
+
+    /* ================= MANAGEMENT SECTION ================= */
+
+    .section-title {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .management-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+
+    .management-card {
+        background-color: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: 0.2s;
+    }
+
+    .management-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .management-card h3 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    .management-card p {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 18px;
+        min-height: 34px;
+    }
+
+    /* ================= VIEW BUTTON ================= */
+
+    .view-button {
+        display: inline-block;
+        padding: 10px 18px;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    /* Patient */
+
+    .patient-button {
+        background-color: #27ae60;
+    }
+
+    .patient-button:hover {
+        background-color: #219150;
+    }
+
+    /* Doctor */
+
+    .doctor-button {
+        background-color: #2980b9;
+    }
+
+    .doctor-button:hover {
+        background-color: #216a9b;
+    }
+
+    /* Appointment */
+
+    .appointment-button {
+        background-color: #8e44ad;
+    }
+
+    .appointment-button:hover {
+        background-color: #71368a;
+    }
+
+    /* Billing */
+
+    .billing-button {
+        background-color: #f39c12;
+    }
+
+    .billing-button:hover {
+        background-color: #d68910;
+    }
+
+    /* Pharmacy */
+
+    .pharmacy-button {
+        background-color: #16a085;
+    }
+
+    .pharmacy-button:hover {
+        background-color: #12806a;
+    }
+
+    /* Laboratory */
+
+    .laboratory-button {
+        background-color: #c0392b;
+    }
+
+    .laboratory-button:hover {
+        background-color: #a93226;
+    }
+
+    /* Medical Records */
+
+    .medical-button {
+        background-color: #34495e;
+    }
+
+    .medical-button:hover {
+        background-color: #283747;
+    }
+
+    /* Reports */
+
+    .reports-button {
+        background-color: #1e3a5f;
+    }
+
+    .reports-button:hover {
+        background-color: #162d4a;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1000px) {
+
+        .management-cards {
+            grid-template-columns: repeat(2, 1fr);
         }
 
-        body {
-            background-color: #f4f6f9;
+    }
+
+    @media (max-width: 768px) {
+
+        .dashboard-cards {
+            grid-template-columns: 1fr;
         }
 
-        .header {
-            background-color: #1e3a5f;
-            color: white;
-            padding: 20px 30px;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .management-cards {
+            grid-template-columns: 1fr;
         }
 
         .header h1 {
-            font-size: 28px;
-        }
-
-        /* Logout Button */
-
-        .logout-form {
-            margin: 0;
+            font-size: 22px;
         }
 
         .logout-button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .logout-button:hover {
-            background-color: #c82333;
+            padding: 8px 14px;
         }
 
         .container {
-            padding: 30px;
+            padding: 20px;
         }
 
-        .welcome {
-            margin-bottom: 30px;
-        }
+    }
 
-        .welcome h2 {
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .welcome p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        .dashboard-cards {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .card {
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            min-height: 160px;
-        }
-
-        .card h3 {
-            color: #555;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .card .number {
-            font-size: 35px;
-            font-weight: bold;
-            color: #1e3a5f;
-        }
-
-        .card .description {
-            margin-top: 8px;
-            color: #777;
-        }
-
-        /* Reports Button */
-
-        .reports-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #1e3a5f;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .reports-button:hover {
-            background-color: #162d4a;
-        }
-
-        @media (max-width: 768px) {
-
-            .dashboard-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .logout-button {
-                padding: 8px 14px;
-            }
-
-        }
-
-    </style>
+</style>
+```
 
 </head>
 
 <body>
 
-    <!-- Header -->
+<!-- ================= HEADER ================= -->
 
-    <div class="header">
+<div class="header">
 
-        <h1>
-            Hospital Management System
-        </h1>
+```
+<h1>
+    Hospital Management System
+</h1>
 
-        <!-- Logout -->
+<form th:action="@{/logout}"
+      method="post"
+      class="logout-form">
 
-        <form th:action="@{/logout}"
-              method="post"
-              class="logout-form">
+    <button type="submit"
+            class="logout-button">
 
-            <button type="submit"
-                    class="logout-button">
+        Logout
 
-                Logout
+    </button>
 
-            </button>
+</form>
+```
 
-        </form>
+</div>
 
-    </div>
+<!-- ================= MAIN CONTAINER ================= -->
+
+<div class="container">
+
+```
+<!-- ================= WELCOME ================= -->
+
+<div class="welcome">
+
+    <h2>
+        Welcome, Administrator
+    </h2>
+
+    <p>
+        Here is your hospital management dashboard.
+    </p>
+
+</div>
 
 
-    <!-- Main Container -->
+<!-- ================= SUMMARY CARDS ================= -->
 
-    <div class="container">
+<div class="dashboard-cards">
 
 
-        <!-- Welcome -->
+    <!-- TOTAL PATIENTS -->
 
-        <div class="welcome">
+    <div class="card">
 
-            <h2>Welcome, Administrator</h2>
+        <h3>
+            Total Patients
+        </h3>
 
-            <p>
-                Here is your hospital management dashboard.
-            </p>
+        <div class="number"
+             th:text="${totalPatients}">
+
+            250
 
         </div>
 
+        <div class="description">
 
-        <!-- Dashboard Cards -->
-
-        <div class="dashboard-cards">
-
-
-            <!-- Total Patients -->
-
-            <div class="card">
-
-                <h3>Total Patients</h3>
-
-                <div class="number"
-                     th:text="${totalPatients}">
-
-                    250
-
-                </div>
-
-                <div class="description">
-
-                    Registered patients
-
-                </div>
-
-            </div>
-
-
-            <!-- Today's Appointments -->
-
-            <div class="card">
-
-                <h3>Today's Appointments</h3>
-
-                <div class="number"
-                     th:text="${todayAppointments}">
-
-                    35
-
-                </div>
-
-                <div class="description">
-
-                    Appointments scheduled today
-
-                </div>
-
-            </div>
-
-
-            <!-- Revenue -->
-
-            <div class="card">
-
-                <h3>Revenue Summary</h3>
-
-                <div class="number">
-
-                    Rs.
-
-                    <span th:text="${revenue}">
-
-                        250000
-
-                    </span>
-
-                </div>
-
-                <div class="description">
-
-                    Total revenue
-
-                </div>
-
-            </div>
-
-
-            <!-- Laboratory Requests -->
-
-            <div class="card">
-
-                <h3>Laboratory Requests</h3>
-
-                <div class="number"
-                     th:text="${laboratoryRequests}">
-
-                    12
-
-                </div>
-
-                <div class="description">
-
-                    Pending laboratory requests
-
-                </div>
-
-            </div>
-
-
-            <!-- Reports -->
-
-            <div class="card">
-
-                <h3>Reports</h3>
-
-                <div class="description">
-
-                    View hospital reports
-
-                </div>
-
-                <a href="/reports"
-                   class="reports-button">
-
-                    View Reports
-
-                </a>
-
-            </div>
-
+            Registered patients
 
         </div>
 
     </div>
+
+
+    <!-- TODAY'S APPOINTMENTS -->
+
+    <div class="card">
+
+        <h3>
+            Today's Appointments
+        </h3>
+
+        <div class="number"
+             th:text="${todayAppointments}">
+
+            35
+
+        </div>
+
+        <div class="description">
+
+            Appointments scheduled today
+
+        </div>
+
+    </div>
+
+
+    <!-- REVENUE -->
+
+    <div class="card">
+
+        <h3>
+            Revenue Summary
+        </h3>
+
+        <div class="number">
+
+            Rs.
+
+            <span th:text="${revenue}">
+
+                250000
+
+            </span>
+
+        </div>
+
+        <div class="description">
+
+            Total revenue
+
+        </div>
+
+    </div>
+
+
+    <!-- LABORATORY REQUESTS -->
+
+    <div class="card">
+
+        <h3>
+            Laboratory Requests
+        </h3>
+
+        <div class="number"
+             th:text="${laboratoryRequests}">
+
+            12
+
+        </div>
+
+        <div class="description">
+
+            Pending laboratory requests
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ================= MANAGEMENT ================= -->
+
+<h2 class="section-title">
+
+    Hospital Management
+
+</h2>
+
+
+<div class="management-cards">
+
+
+    <!-- ================= PATIENTS ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            👤 Patients
+        </h3>
+
+        <p>
+            Manage registered patients
+        </p>
+
+        <a href="/patients"
+           class="view-button patient-button">
+
+            View Patients
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= DOCTORS ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            👨‍⚕️ Doctors
+        </h3>
+
+        <p>
+            Manage doctors and specialists
+        </p>
+
+        <a href="/doctors"
+           class="view-button doctor-button">
+
+            View Doctors
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= APPOINTMENTS ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            📅 Appointments
+        </h3>
+
+        <p>
+            Manage patient appointments
+        </p>
+
+        <a href="/appointments"
+           class="view-button appointment-button">
+
+            View Appointments
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= BILLING ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            💳 Billing
+        </h3>
+
+        <p>
+            Manage hospital bills and payments
+        </p>
+
+        <a href="/billing"
+           class="view-button billing-button">
+
+            View Billing
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= PHARMACY ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            💊 Pharmacy
+        </h3>
+
+        <p>
+            Manage medicines and pharmacy stock
+        </p>
+
+        <a href="/pharmacy"
+           class="view-button pharmacy-button">
+
+            View Pharmacy
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= LABORATORY ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            🧪 Laboratory
+        </h3>
+
+        <p>
+            Manage laboratory tests and results
+        </p>
+
+        <a href="/laboratory"
+           class="view-button laboratory-button">
+
+            View Laboratory
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= MEDICAL RECORDS ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            📋 Medical Records
+        </h3>
+
+        <p>
+            View patient medical records
+        </p>
+
+        <a href="/medical-records"
+           class="view-button medical-button">
+
+            View Medical Records
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= REPORTS ================= -->
+
+    <div class="management-card">
+
+        <h3>
+            📊 Reports
+        </h3>
+
+        <p>
+            View hospital reports
+        </p>
+
+        <a href="/reports"
+           class="view-button reports-button">
+
+            View Reports
+
+        </a>
+
+    </div>
+
+
+</div>
+```
+
+</div>
 
 </body>
 
