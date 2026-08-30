@@ -25,6 +25,7 @@ public class Employee {
 
     private String attendance;
 
+    @Column(name = "leave_days")
     private String leave;
 
     @ManyToOne
