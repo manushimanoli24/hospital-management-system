@@ -36,6 +36,24 @@
             margin-bottom: 25px;
         }
 
+        .top-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .dashboard-button {
+            background: #1e3a5f;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .dashboard-button:hover {
+            background: #16304f;
+        }
+
         .add-button {
             background: #27ae60;
             color: white;
@@ -118,10 +136,21 @@
 
         <h2>Patient Management</h2>
 
-        <a href="/patients/add"
-           class="add-button">
-            + Add Patient
-        </a>
+        <div class="top-buttons">
+
+            <!-- Back to Dashboard -->
+            <a href="/dashboard"
+               class="dashboard-button">
+                ← Back to Dashboard
+            </a>
+
+            <!-- Add Patient -->
+            <a href="/patients/add"
+               class="add-button">
+                + Add Patient
+            </a>
+
+        </div>
 
     </div>
 
@@ -178,8 +207,6 @@
             <td th:text="${patient.id}">
                 1
             </td>
-
-            <!-- FIXED: Patient has firstName and lastName, not name -->
 
             <td th:text="${patient.firstName + ' ' + patient.lastName}">
                 John Doe
