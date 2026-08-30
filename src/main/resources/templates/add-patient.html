@@ -134,17 +134,18 @@
 
         <h2>Add New Patient</h2>
 
-        <!-- Validation Summary -->
-        <div class="error-summary"
-             th:if="${#fields.hasAnyErrors()}">
-
-            Please correct the errors below before saving the patient.
-
-        </div>
-
+        <!-- Patient Form -->
         <form th:action="@{/patients/add}"
               th:object="${patient}"
               method="post">
+
+            <!-- Validation Summary -->
+            <div class="error-summary"
+                 th:if="${#fields.hasAnyErrors()}">
+
+                Please correct the errors below before saving the patient.
+
+            </div>
 
             <!-- First Name -->
             <div class="form-group">
