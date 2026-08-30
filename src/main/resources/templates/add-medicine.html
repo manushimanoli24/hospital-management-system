@@ -37,10 +37,25 @@
             padding: 10px;
             margin-top: 5px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         textarea {
             height: 80px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
         }
 
         button {
@@ -56,6 +71,14 @@
 
         button:hover {
             opacity: 0.9;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #2563eb;
         }
 
     </style>
@@ -82,7 +105,15 @@
         <input
             type="text"
             th:field="*{name}"
+            minlength="2"
+            maxlength="100"
             required>
+
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('name')}"
+            th:errors="*{name}">
+        </div>
 
 
         <!-- Description -->
@@ -92,8 +123,15 @@
         </label>
 
         <textarea
-            th:field="*{description}">
+            th:field="*{description}"
+            maxlength="500">
         </textarea>
+
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}">
+        </div>
 
 
         <!-- Category -->
@@ -104,7 +142,16 @@
 
         <input
             type="text"
-            th:field="*{category}">
+            th:field="*{category}"
+            minlength="2"
+            maxlength="100"
+            required>
+
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('category')}"
+            th:errors="*{category}">
+        </div>
 
 
         <!-- Stock -->
@@ -118,6 +165,12 @@
             th:field="*{stock}"
             min="0"
             required>
+
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('stock')}"
+            th:errors="*{stock}">
+        </div>
 
 
         <!-- Price -->
@@ -133,6 +186,12 @@
             step="0.01"
             required>
 
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('price')}"
+            th:errors="*{price}">
+        </div>
+
 
         <!-- Expiry Date -->
 
@@ -145,6 +204,12 @@
             th:field="*{expiryDate}"
             required>
 
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('expiryDate')}"
+            th:errors="*{expiryDate}">
+        </div>
+
 
         <!-- Save -->
 
@@ -153,6 +218,17 @@
         </button>
 
     </form>
+
+
+    <!-- Back -->
+
+    <a
+        href="/pharmacy"
+        class="back-button">
+
+        ← Back to Pharmacy
+
+    </a>
 
 </div>
 

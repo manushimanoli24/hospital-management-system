@@ -1,6 +1,7 @@
 package com.hospital.hms.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
 @Entity
@@ -11,17 +12,26 @@ public class Medicine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Medicine name is required")
+    @Size(min = 2, max = 100, message = "Medicine name must be between 2 and 100 characters")
     @Column(nullable = false)
     private String name;
 
+    @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
 
+    @NotBlank(message = "Category is required")
+    @Size(min = 2, max = 100, message = "Category must be between 2 and 100 characters")
     private String category;
 
+    @Min(value = 0, message = "Stock cannot be negative")
     private int stock;
 
+    @DecimalMin(value = "0.0", inclusive = true, message = "Price cannot be negative")
     private double price;
 
+    @NotNull(message = "Expiry date is required")
+    @FutureOrPresent(message = "Expiry date cannot be in the past")
     private LocalDate expiryDate;
 
     public Medicine() {
@@ -83,7 +93,6 @@ public class Medicine {
         this.expiryDate = expiryDate;
     }
 
-    // Automatically determine expiry status
     @Transient
     public String getExpiryStatus() {
 

@@ -1,6 +1,10 @@
 package com.hospital.hms.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 @Entity
@@ -11,20 +15,28 @@ public class LaboratoryTest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Please select a patient")
     private Long patientId;
 
+    @NotNull(message = "Please select a doctor")
     private Long doctorId;
 
+    @NotBlank(message = "Test name is required")
+    @Size(max = 100, message = "Test name must not exceed 100 characters")
     @Column(nullable = false)
     private String testName;
 
+    @Size(max = 100, message = "Sample must not exceed 100 characters")
     private String sample;
 
+    @Size(max = 1000, message = "Result must not exceed 1000 characters")
     @Column(columnDefinition = "TEXT")
     private String result;
 
+    @NotNull(message = "Test date is required")
     private LocalDate testDate;
 
+    @NotBlank(message = "Status is required")
     private String status;
 
     public LaboratoryTest() {

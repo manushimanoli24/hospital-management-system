@@ -3,8 +3,11 @@ package com.hospital.hms.controller;
 import com.hospital.hms.entity.Medicine;
 import com.hospital.hms.repository.MedicineRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -71,6 +74,7 @@ public class PharmacyController {
         return "pharmacy";
     }
 
+
     // Add medicine page
     @GetMapping("/add")
     public String addMedicine(Model model) {
@@ -83,15 +87,23 @@ public class PharmacyController {
         return "add-medicine";
     }
 
-    // Save medicine
+
+    // Save medicine with validation
     @PostMapping("/save")
     public String saveMedicine(
-            @ModelAttribute Medicine medicine) {
+            @Valid @ModelAttribute("medicine") Medicine medicine,
+            BindingResult bindingResult) {
+
+        // If validation fails, return to add page
+        if (bindingResult.hasErrors()) {
+            return "add-medicine";
+        }
 
         medicineRepository.save(medicine);
 
         return "redirect:/pharmacy";
     }
+
 
     // Edit medicine page
     @GetMapping("/edit/{id}")
@@ -112,18 +124,27 @@ public class PharmacyController {
         return "edit-medicine";
     }
 
-    // Update medicine
+
+    // Update medicine with validation
     @PostMapping("/update/{id}")
     public String updateMedicine(
             @PathVariable Long id,
-            @ModelAttribute Medicine medicine) {
+            @Valid @ModelAttribute("medicine") Medicine medicine,
+            BindingResult bindingResult) {
 
+        // Keep the existing ID
         medicine.setId(id);
+
+        // If validation fails, return to edit page
+        if (bindingResult.hasErrors()) {
+            return "edit-medicine";
+        }
 
         medicineRepository.save(medicine);
 
         return "redirect:/pharmacy";
     }
+
 
     // Delete medicine
     @GetMapping("/delete/{id}")

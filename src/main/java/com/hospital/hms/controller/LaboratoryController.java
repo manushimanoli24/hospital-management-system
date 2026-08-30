@@ -5,8 +5,11 @@ import com.hospital.hms.repository.LaboratoryTestRepository;
 import com.hospital.hms.repository.PatientRepository;
 import com.hospital.hms.repository.DoctorRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -29,7 +32,6 @@ public class LaboratoryController {
         this.doctorRepository = doctorRepository;
     }
 
-
     // Laboratory test list
     @GetMapping
     public String laboratory(Model model) {
@@ -42,13 +44,11 @@ public class LaboratoryController {
         return "laboratory";
     }
 
-
     // Add laboratory test page
     @GetMapping("/add")
     public String addLaboratoryTest(Model model) {
 
-        LaboratoryTest laboratoryTest =
-                new LaboratoryTest();
+        LaboratoryTest laboratoryTest = new LaboratoryTest();
 
         laboratoryTest.setTestDate(LocalDate.now());
         laboratoryTest.setStatus("REQUESTED");
@@ -71,14 +71,29 @@ public class LaboratoryController {
         return "add-laboratory-test";
     }
 
-
-    // Save laboratory test
+    // Save laboratory test with validation
     @PostMapping("/save")
     public String saveLaboratoryTest(
-            @ModelAttribute LaboratoryTest laboratoryTest) {
+            @Valid @ModelAttribute("laboratoryTest") LaboratoryTest laboratoryTest,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute(
+                    "patients",
+                    patientRepository.findAll()
+            );
+
+            model.addAttribute(
+                    "doctors",
+                    doctorRepository.findAll()
+            );
+
+            return "add-laboratory-test";
+        }
 
         if (laboratoryTest.getTestDate() == null) {
-
             laboratoryTest.setTestDate(LocalDate.now());
         }
 
@@ -93,14 +108,15 @@ public class LaboratoryController {
         return "redirect:/laboratory";
     }
 
-
     // Collect Sample
     @PostMapping("/collect/{id}")
     public String collectSample(
             @PathVariable Long id) {
 
         LaboratoryTest test =
-                laboratoryTestRepository.findById(id).orElse(null);
+                laboratoryTestRepository
+                        .findById(id)
+                        .orElse(null);
 
         if (test != null) {
 
@@ -112,7 +128,6 @@ public class LaboratoryController {
         return "redirect:/laboratory";
     }
 
-
     // Enter Result page
     @GetMapping("/result/{id}")
     public String enterResult(
@@ -120,10 +135,11 @@ public class LaboratoryController {
             Model model) {
 
         LaboratoryTest test =
-                laboratoryTestRepository.findById(id).orElse(null);
+                laboratoryTestRepository
+                        .findById(id)
+                        .orElse(null);
 
         if (test == null) {
-
             return "redirect:/laboratory";
         }
 
@@ -135,7 +151,6 @@ public class LaboratoryController {
         return "enter-result";
     }
 
-
     // Save Result
     @PostMapping("/result/{id}")
     public String saveResult(
@@ -143,12 +158,13 @@ public class LaboratoryController {
             @RequestParam("result") String result) {
 
         LaboratoryTest test =
-                laboratoryTestRepository.findById(id).orElse(null);
+                laboratoryTestRepository
+                        .findById(id)
+                        .orElse(null);
 
         if (test != null) {
 
             test.setResult(result);
-
             test.setStatus("RESULT_ENTERED");
 
             laboratoryTestRepository.save(test);
@@ -157,7 +173,6 @@ public class LaboratoryController {
         return "redirect:/laboratory";
     }
 
-
     // Generate / View Laboratory Report
     @GetMapping("/report/{id}")
     public String generateReport(
@@ -165,10 +180,11 @@ public class LaboratoryController {
             Model model) {
 
         LaboratoryTest test =
-                laboratoryTestRepository.findById(id).orElse(null);
+                laboratoryTestRepository
+                        .findById(id)
+                        .orElse(null);
 
         if (test == null) {
-
             return "redirect:/laboratory";
         }
 
@@ -179,5 +195,4 @@ public class LaboratoryController {
 
         return "laboratory-report";
     }
-
 }
