@@ -33,10 +33,11 @@
             background: white;
             padding: 30px;
             border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         label {
@@ -49,6 +50,20 @@
             width: 100%;
             padding: 10px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
         }
 
         button {
@@ -60,6 +75,15 @@
             cursor: pointer;
         }
 
+        button:hover {
+            background: #162d4a;
+        }
+
+        .back {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
     </style>
 
 </head>
@@ -67,8 +91,11 @@
 <body>
 
 <div class="header">
+
     <h1>✏️ Edit Doctor</h1>
+
 </div>
+
 
 <div class="container">
 
@@ -76,67 +103,237 @@
 
         <form th:action="@{/doctors/edit/{id}(id=${doctor.id})}"
               th:object="${doctor}"
-              method="post">
+              method="post"
+              onsubmit="return validateDoctorForm()">
+
+
+            <!-- First Name -->
 
             <div class="form-group">
+
                 <label>First Name</label>
-                <input type="text"
-                       th:field="*{firstName}"
-                       required>
+
+                <input
+                        type="text"
+                        th:field="*{firstName}"
+                        required
+                        maxlength="50"
+                        pattern="[A-Za-z ]+"
+                        title="First name must contain letters only">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('firstName')}"
+                        th:errors="*{firstName}">
+                </span>
+
             </div>
 
+
+            <!-- Last Name -->
+
             <div class="form-group">
+
                 <label>Last Name</label>
-                <input type="text"
-                       th:field="*{lastName}"
-                       required>
+
+                <input
+                        type="text"
+                        th:field="*{lastName}"
+                        required
+                        maxlength="50"
+                        pattern="[A-Za-z ]+"
+                        title="Last name must contain letters only">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('lastName')}"
+                        th:errors="*{lastName}">
+                </span>
+
             </div>
 
+
+            <!-- Specialization -->
+
             <div class="form-group">
+
                 <label>Specialization</label>
-                <input type="text"
-                       th:field="*{specialization}">
+
+                <input
+                        type="text"
+                        th:field="*{specialization}"
+                        required
+                        maxlength="100">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('specialization')}"
+                        th:errors="*{specialization}">
+                </span>
+
             </div>
 
+
+            <!-- Phone -->
+
             <div class="form-group">
+
                 <label>Phone</label>
-                <input type="text"
-                       th:field="*{phone}">
+
+                <input
+                        type="tel"
+                        th:field="*{phone}"
+                        required
+                        minlength="10"
+                        maxlength="10"
+                        pattern="[0-9]{10}"
+                        title="Phone number must contain exactly 10 digits">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('phone')}"
+                        th:errors="*{phone}">
+                </span>
+
             </div>
 
+
+            <!-- Email -->
+
             <div class="form-group">
+
                 <label>Email</label>
-                <input type="email"
-                       th:field="*{email}">
+
+                <input
+                        type="email"
+                        th:field="*{email}"
+                        required
+                        maxlength="100"
+                        placeholder="example@gmail.com">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('email')}"
+                        th:errors="*{email}">
+                </span>
+
             </div>
 
+
+            <!-- Department -->
+
             <div class="form-group">
+
                 <label>Department</label>
-                <input type="text"
-                       th:field="*{department}">
+
+                <input
+                        type="text"
+                        th:field="*{department}"
+                        required
+                        maxlength="100">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('department')}"
+                        th:errors="*{department}">
+                </span>
+
             </div>
 
+
+            <!-- Schedule -->
+
             <div class="form-group">
+
                 <label>Schedule</label>
-                <input type="text"
-                       th:field="*{schedule}">
+
+                <input
+                        type="text"
+                        th:field="*{schedule}"
+                        required
+                        maxlength="150"
+                        placeholder="Monday - Friday, 8:00 AM - 4:00 PM">
+
+                <span
+                        class="error"
+                        th:if="${#fields.hasErrors('schedule')}"
+                        th:errors="*{schedule}">
+                </span>
+
             </div>
+
+
+            <!-- Update -->
 
             <button type="submit">
+
                 💾 Update Doctor
+
             </button>
 
         </form>
 
+
         <br>
 
-        <a href="/doctors">
+        <a href="/doctors" class="back">
+
             ← Back to Doctors
+
         </a>
 
     </div>
 
 </div>
+
+
+<script>
+
+    function validateDoctorForm() {
+
+        const firstName =
+            document.getElementById("firstName").value.trim();
+
+        const lastName =
+            document.getElementById("lastName").value.trim();
+
+        const phone =
+            document.getElementById("phone").value.trim();
+
+        const namePattern = /^[A-Za-z ]+$/;
+
+        const phonePattern = /^[0-9]{10}$/;
+
+
+        if (!namePattern.test(firstName)) {
+
+            alert("First name must contain letters only.");
+
+            return false;
+        }
+
+
+        if (!namePattern.test(lastName)) {
+
+            alert("Last name must contain letters only.");
+
+            return false;
+        }
+
+
+        if (!phonePattern.test(phone)) {
+
+            alert("Phone number must contain exactly 10 digits.");
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+</script>
+
 
 </body>
 

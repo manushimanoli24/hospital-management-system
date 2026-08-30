@@ -3,8 +3,11 @@ package com.hospital.hms.controller;
 import com.hospital.hms.entity.Doctor;
 import com.hospital.hms.service.DoctorService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -22,8 +25,10 @@ public class DoctorController {
             @RequestParam(required = false) String search,
             Model model) {
 
-        model.addAttribute("doctors",
-                doctorService.searchDoctors(search));
+        model.addAttribute(
+                "doctors",
+                doctorService.searchDoctors(search)
+        );
 
         model.addAttribute("search", search);
 
@@ -41,7 +46,14 @@ public class DoctorController {
 
     // Save Doctor
     @PostMapping("/doctors/add")
-    public String addDoctor(@ModelAttribute Doctor doctor) {
+    public String addDoctor(
+            @Valid @ModelAttribute("doctor") Doctor doctor,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "add-doctor";
+        }
 
         doctorService.saveDoctor(doctor);
 
@@ -86,7 +98,14 @@ public class DoctorController {
     @PostMapping("/doctors/edit/{id}")
     public String updateDoctor(
             @PathVariable Long id,
-            @ModelAttribute Doctor doctor) {
+            @Valid @ModelAttribute("doctor") Doctor doctor,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            doctor.setId(id);
+            return "edit-doctor";
+        }
 
         doctor.setId(id);
 

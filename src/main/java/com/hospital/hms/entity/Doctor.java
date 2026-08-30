@@ -1,6 +1,10 @@
 package com.hospital.hms.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "doctors")
@@ -10,20 +14,45 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "First name is required")
+    @Pattern(
+            regexp = "^[A-Za-z ]+$",
+            message = "First name must contain letters only"
+    )
+    @Size(max = 50, message = "First name must not exceed 50 characters")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @NotBlank(message = "Last name is required")
+    @Pattern(
+            regexp = "^[A-Za-z ]+$",
+            message = "Last name must contain letters only"
+    )
+    @Size(max = 50, message = "Last name must not exceed 50 characters")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @NotBlank(message = "Specialization is required")
+    @Size(max = 100, message = "Specialization must not exceed 100 characters")
     private String specialization;
 
+    @NotBlank(message = "Phone number is required")
+    @Pattern(
+            regexp = "^[0-9]{10}$",
+            message = "Phone number must contain exactly 10 digits"
+    )
     private String phone;
 
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
     private String email;
 
+    @NotBlank(message = "Department is required")
+    @Size(max = 100, message = "Department must not exceed 100 characters")
     private String department;
 
+    @NotBlank(message = "Schedule is required")
+    @Size(max = 150, message = "Schedule must not exceed 150 characters")
     private String schedule;
 
     public Doctor() {
