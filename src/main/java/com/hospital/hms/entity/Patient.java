@@ -1,6 +1,12 @@
 package com.hospital.hms.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 @Entity
@@ -11,22 +17,45 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "First name is required")
+    @Size(min = 2, max = 50, message = "First name must be between 2 and 50 characters")
+    @Pattern(
+        regexp = "^[\\p{L} .'-]+$",
+        message = "First name can contain only letters, spaces, dots, apostrophes and hyphens"
+    )
     @Column(nullable = false)
     private String firstName;
 
+    @NotBlank(message = "Last name is required")
+    @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
+    @Pattern(
+        regexp = "^[\\p{L} .'-]+$",
+        message = "Last name can contain only letters, spaces, dots, apostrophes and hyphens"
+    )
     @Column(nullable = false)
     private String lastName;
 
+    @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
 
+    @NotBlank(message = "Please select a gender")
     private String gender;
 
+    @NotBlank(message = "Phone number is required")
+    @Pattern(
+        regexp = "^0[0-9]{9}$",
+        message = "Phone number must contain exactly 10 digits and start with 0"
+    )
     private String phone;
 
+    @Email(message = "Please enter a valid email address")
+    @Size(max = 100, message = "Email cannot exceed 100 characters")
     private String email;
 
+    @Size(max = 255, message = "Address cannot exceed 255 characters")
     private String address;
 
+    @Size(max = 2000, message = "Medical history cannot exceed 2000 characters")
     @Column(length = 2000)
     private String medicalHistory;
 

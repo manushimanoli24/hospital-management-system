@@ -96,6 +96,29 @@
         .required {
             color: red;
         }
+
+        /* Validation error message */
+        .error {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Highlight invalid fields */
+        .input-error {
+            border: 1px solid #d32f2f;
+        }
+
+        /* Error summary */
+        .error-summary {
+            background: #ffe6e6;
+            border: 1px solid #d32f2f;
+            color: #b71c1c;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -111,12 +134,21 @@
 
         <h2>Add New Patient</h2>
 
+        <!-- Validation Summary -->
+        <div class="error-summary"
+             th:if="${#fields.hasAnyErrors()}">
+
+            Please correct the errors below before saving the patient.
+
+        </div>
+
         <form th:action="@{/patients/add}"
               th:object="${patient}"
               method="post">
 
             <!-- First Name -->
             <div class="form-group">
+
                 <label for="firstName">
                     First Name <span class="required">*</span>
                 </label>
@@ -124,12 +156,19 @@
                 <input type="text"
                        id="firstName"
                        th:field="*{firstName}"
-                       placeholder="Enter first name"
-                       required>
+                       th:classappend="${#fields.hasErrors('firstName')} ? 'input-error' : ''"
+                       placeholder="Enter first name">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('firstName')}"
+                      th:errors="*{firstName}">
+                </span>
+
             </div>
 
             <!-- Last Name -->
             <div class="form-group">
+
                 <label for="lastName">
                     Last Name <span class="required">*</span>
                 </label>
@@ -137,29 +176,45 @@
                 <input type="text"
                        id="lastName"
                        th:field="*{lastName}"
-                       placeholder="Enter last name"
-                       required>
+                       th:classappend="${#fields.hasErrors('lastName')} ? 'input-error' : ''"
+                       placeholder="Enter last name">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('lastName')}"
+                      th:errors="*{lastName}">
+                </span>
+
             </div>
 
             <!-- Date of Birth -->
             <div class="form-group">
+
                 <label for="dateOfBirth">
                     Date of Birth
                 </label>
 
                 <input type="date"
                        id="dateOfBirth"
-                       th:field="*{dateOfBirth}">
+                       th:field="*{dateOfBirth}"
+                       th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'input-error' : ''">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('dateOfBirth')}"
+                      th:errors="*{dateOfBirth}">
+                </span>
+
             </div>
 
             <!-- Gender -->
             <div class="form-group">
+
                 <label for="gender">
                     Gender
                 </label>
 
                 <select id="gender"
-                        th:field="*{gender}">
+                        th:field="*{gender}"
+                        th:classappend="${#fields.hasErrors('gender')} ? 'input-error' : ''">
 
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
@@ -167,10 +222,17 @@
                     <option value="Other">Other</option>
 
                 </select>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('gender')}"
+                      th:errors="*{gender}">
+                </span>
+
             </div>
 
             <!-- Phone -->
             <div class="form-group">
+
                 <label for="phone">
                     Phone Number
                 </label>
@@ -178,11 +240,19 @@
                 <input type="text"
                        id="phone"
                        th:field="*{phone}"
+                       th:classappend="${#fields.hasErrors('phone')} ? 'input-error' : ''"
                        placeholder="Enter phone number">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('phone')}"
+                      th:errors="*{phone}">
+                </span>
+
             </div>
 
             <!-- Email -->
             <div class="form-group">
+
                 <label for="email">
                     Email
                 </label>
@@ -190,29 +260,52 @@
                 <input type="email"
                        id="email"
                        th:field="*{email}"
+                       th:classappend="${#fields.hasErrors('email')} ? 'input-error' : ''"
                        placeholder="Enter email address">
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('email')}"
+                      th:errors="*{email}">
+                </span>
+
             </div>
 
             <!-- Address -->
             <div class="form-group">
+
                 <label for="address">
                     Address
                 </label>
 
                 <textarea id="address"
                           th:field="*{address}"
+                          th:classappend="${#fields.hasErrors('address')} ? 'input-error' : ''"
                           placeholder="Enter patient's address"></textarea>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('address')}"
+                      th:errors="*{address}">
+                </span>
+
             </div>
 
             <!-- Medical History -->
             <div class="form-group">
+
                 <label for="medicalHistory">
                     Medical History
                 </label>
 
                 <textarea id="medicalHistory"
                           th:field="*{medicalHistory}"
+                          th:classappend="${#fields.hasErrors('medicalHistory')} ? 'input-error' : ''"
                           placeholder="Enter patient's medical history"></textarea>
+
+                <span class="error"
+                      th:if="${#fields.hasErrors('medicalHistory')}"
+                      th:errors="*{medicalHistory}">
+                </span>
+
             </div>
 
             <!-- Buttons -->
