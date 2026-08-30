@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Edit Medical Record</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        select,
+        textarea,
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .save-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Edit Medical Record</h1>
+
+
+    <form
+            th:action="@{/medical-records/save}"
+            th:object="${medicalRecord}"
+            method="post">
+
+
+        <!-- Hidden ID -->
+
+        <input
+                type="hidden"
+                th:field="*{id}">
+
+
+        <!-- Patient -->
+
+        <label>
+            Patient
+        </label>
+
+        <select
+                th:field="*{patientId}"
+                required>
+
+            <option value="">
+                Select Patient
+            </option>
+
+            <option
+                    th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.firstName + ' ' + patient.lastName}">
+            </option>
+
+        </select>
+
+
+        <!-- Diagnosis -->
+
+        <label>
+            Diagnosis
+        </label>
+
+        <textarea
+                th:field="*{diagnosis}"
+                placeholder="Enter diagnosis"
+                required>
+        </textarea>
+
+
+        <!-- Treatment -->
+
+        <label>
+            Treatment
+        </label>
+
+        <textarea
+                th:field="*{treatment}"
+                placeholder="Enter treatment">
+        </textarea>
+
+
+        <!-- Prescription -->
+
+        <label>
+            Prescription
+        </label>
+
+        <textarea
+                th:field="*{prescription}"
+                placeholder="Enter prescription">
+        </textarea>
+
+
+        <!-- Medical Report -->
+
+        <label>
+            Medical Report
+        </label>
+
+        <textarea
+                th:field="*{medicalReport}"
+                placeholder="Enter medical report">
+        </textarea>
+
+
+        <!-- Record Date -->
+
+        <label>
+            Record Date
+        </label>
+
+        <input
+                type="date"
+                th:field="*{recordDate}">
+
+
+        <!-- Save -->
+
+        <button
+                type="submit"
+                class="save-button">
+
+            💾 Update Medical Record
+
+        </button>
+
+    </form>
+
+
+    <!-- Back -->
+
+    <form
+            action="/medical-records"
+            method="get">
+
+        <button
+                type="submit"
+                class="back-button">
+
+            ← Back to Medical Records
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

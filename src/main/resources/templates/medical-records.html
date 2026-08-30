@@ -69,6 +69,39 @@
             border-bottom: 1px solid #ddd;
         }
 
+        .action-button {
+            display: inline-block;
+            padding: 7px 12px;
+            margin: 2px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .view-button {
+            background-color: #16a34a;
+        }
+
+        .view-button:hover {
+            background-color: #15803d;
+        }
+
+        .edit-button {
+            background-color: #f59e0b;
+        }
+
+        .edit-button:hover {
+            background-color: #d97706;
+        }
+
+        .delete-button {
+            background-color: #dc2626;
+        }
+
+        .delete-button:hover {
+            background-color: #b91c1c;
+        }
+
     </style>
 
 </head>
@@ -109,6 +142,7 @@
         <th>Prescription</th>
         <th>Medical Report</th>
         <th>Date</th>
+        <th>Actions</th>
 
     </tr>
 
@@ -120,28 +154,98 @@
     <tr
             th:each="record : ${medicalRecords}">
 
+        <!-- Patient -->
+
         <td th:text="${record.patientId}">
             Patient
         </td>
+
+
+        <!-- Diagnosis -->
 
         <td th:text="${record.diagnosis}">
             Diagnosis
         </td>
 
+
+        <!-- Treatment -->
+
         <td th:text="${record.treatment}">
             Treatment
         </td>
+
+
+        <!-- Prescription -->
 
         <td th:text="${record.prescription}">
             Prescription
         </td>
 
+
+        <!-- Medical Report -->
+
         <td th:text="${record.medicalReport}">
             Medical Report
         </td>
 
+
+        <!-- Date -->
+
         <td th:text="${record.recordDate}">
             Date
+        </td>
+
+
+        <!-- Actions -->
+
+        <td>
+
+            <!-- View -->
+
+            <a
+                    th:href="@{/medical-records/view/{id}(id=${record.id})}"
+                    class="action-button view-button">
+
+                👁 View
+
+            </a>
+
+
+            <!-- Edit -->
+
+            <a
+                    th:href="@{/medical-records/edit/{id}(id=${record.id})}"
+                    class="action-button edit-button">
+
+                ✏ Edit
+
+            </a>
+
+
+            <!-- Delete -->
+
+            <a
+                    th:href="@{/medical-records/delete/{id}(id=${record.id})}"
+                    class="action-button delete-button"
+                    onclick="return confirm('Are you sure you want to delete this medical record?');">
+
+                🗑 Delete
+
+            </a>
+
+        </td>
+
+    </tr>
+
+
+    <!-- No Records -->
+
+    <tr th:if="${#lists.isEmpty(medicalRecords)}">
+
+        <td colspan="7" style="text-align: center; padding: 20px;">
+
+            No medical records found.
+
         </td>
 
     </tr>

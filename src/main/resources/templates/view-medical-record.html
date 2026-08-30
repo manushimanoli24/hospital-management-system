@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>View Medical Record</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            width: 650px;
+            margin: auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .record {
+            margin-bottom: 20px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .value {
+            background-color: #f4f6f8;
+            padding: 12px;
+            border-radius: 5px;
+            min-height: 20px;
+            white-space: pre-wrap;
+        }
+
+        .button-container {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 18px;
+            margin: 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .back-button {
+            background-color: #1e3a5f;
+        }
+
+        .edit-button {
+            background-color: #f59e0b;
+        }
+
+        .back-button:hover {
+            background-color: #162d4a;
+        }
+
+        .edit-button:hover {
+            background-color: #d97706;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Medical Record Details</h1>
+
+
+    <!-- Patient -->
+
+    <div class="record">
+
+        <div class="label">
+            Patient ID
+        </div>
+
+        <div class="value"
+             th:text="${medicalRecord.patientId}">
+            Patient ID
+        </div>
+
+    </div>
+
+
+    <!-- Diagnosis -->
+
+    <div class="record">
+
+        <div class="label">
+            Diagnosis
+        </div>
+
+        <div class="value"
+             th:text="${medicalRecord.diagnosis}">
+            Diagnosis
+        </div>
+
+    </div>
+
+
+    <!-- Treatment -->
+
+    <div class="record">
+
+        <div class="label">
+            Treatment
+        </div>
+
+        <div class="value"
+             th:text="${medicalRecord.treatment}">
+            Treatment
+        </div>
+
+    </div>
+
+
+    <!-- Prescription -->
+
+    <div class="record">
+
+        <div class="label">
+            Prescription
+        </div>
+
+        <div class="value"
+             th:text="${medicalRecord.prescription}">
+            Prescription
+        </div>
+
+    </div>
+
+
+    <!-- Medical Report -->
+
+    <div class="record">
+
+        <div class="label">
+            Medical Report
+        </div>
+
+        <div class="value"
+             th:text="${medicalRecord.medicalReport}">
+            Medical Report
+        </div>
+
+    </div>
+
+
+    <!-- Record Date -->
+
+    <div class="record">
+
+        <div class="label">
+            Record Date
+        </div>
+
+        <div class="value"
+             th:text="${medicalRecord.recordDate}">
+            Date
+        </div>
+
+    </div>
+
+
+    <!-- Buttons -->
+
+    <div class="button-container">
+
+        <a
+                th:href="@{/medical-records/edit/{id}(id=${medicalRecord.id})}"
+                class="button edit-button">
+
+            ✏ Edit
+
+        </a>
+
+
+        <a
+                href="/medical-records"
+                class="button back-button">
+
+            ← Back to Medical Records
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

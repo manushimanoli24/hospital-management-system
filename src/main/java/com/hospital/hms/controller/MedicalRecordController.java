@@ -25,7 +25,11 @@ public class MedicalRecordController {
         this.patientRepository = patientRepository;
     }
 
-    // Medical Records list
+
+    // ==============================
+    // Medical Records List
+    // ==============================
+
     @GetMapping
     public String medicalRecords(Model model) {
 
@@ -37,7 +41,11 @@ public class MedicalRecordController {
         return "medical-records";
     }
 
-    // Add Medical Record page
+
+    // ==============================
+    // Add Medical Record Page
+    // ==============================
+
     @GetMapping("/add")
     public String addMedicalRecord(Model model) {
 
@@ -58,7 +66,11 @@ public class MedicalRecordController {
         return "add-medical-record";
     }
 
+
+    // ==============================
     // Save Medical Record
+    // ==============================
+
     @PostMapping("/save")
     public String saveMedicalRecord(
             @ModelAttribute MedicalRecord medicalRecord) {
@@ -68,6 +80,77 @@ public class MedicalRecordController {
         }
 
         medicalRecordRepository.save(medicalRecord);
+
+        return "redirect:/medical-records";
+    }
+
+
+    // ==============================
+    // View Medical Record
+    // ==============================
+
+    @GetMapping("/view/{id}")
+    public String viewMedicalRecord(
+            @PathVariable Long id,
+            Model model) {
+
+        MedicalRecord medicalRecord =
+                medicalRecordRepository.findById(id)
+                        .orElseThrow(
+                                () -> new IllegalArgumentException(
+                                        "Invalid medical record ID: " + id
+                                )
+                        );
+
+        model.addAttribute(
+                "medicalRecord",
+                medicalRecord
+        );
+
+        return "view-medical-record";
+    }
+
+
+    // ==============================
+    // Edit Medical Record Page
+    // ==============================
+
+    @GetMapping("/edit/{id}")
+    public String editMedicalRecord(
+            @PathVariable Long id,
+            Model model) {
+
+        MedicalRecord medicalRecord =
+                medicalRecordRepository.findById(id)
+                        .orElseThrow(
+                                () -> new IllegalArgumentException(
+                                        "Invalid medical record ID: " + id
+                                )
+                        );
+
+        model.addAttribute(
+                "medicalRecord",
+                medicalRecord
+        );
+
+        model.addAttribute(
+                "patients",
+                patientRepository.findAll()
+        );
+
+        return "edit-medical-record";
+    }
+
+
+    // ==============================
+    // Delete Medical Record
+    // ==============================
+
+    @GetMapping("/delete/{id}")
+    public String deleteMedicalRecord(
+            @PathVariable Long id) {
+
+        medicalRecordRepository.deleteById(id);
 
         return "redirect:/medical-records";
     }
