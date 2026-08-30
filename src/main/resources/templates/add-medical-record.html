@@ -40,11 +40,25 @@
             padding: 10px;
             margin-top: 6px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         textarea {
             height: 100px;
             resize: vertical;
+        }
+
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
         }
 
         .save-button {
@@ -58,6 +72,10 @@
             cursor: pointer;
         }
 
+        .save-button:hover {
+            background-color: #1d4ed8;
+        }
+
         .back-button {
             width: 100%;
             margin-top: 10px;
@@ -66,6 +84,10 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #ccc;
         }
 
     </style>
@@ -81,13 +103,15 @@
     <form
         th:action="@{/medical-records/save}"
         th:object="${medicalRecord}"
-        method="post">
+        method="post"
+        onsubmit="return validateForm()">
 
         <!-- Patient -->
 
         <label>Patient</label>
 
         <select
+            id="patientId"
             th:field="*{patientId}"
             required>
 
@@ -103,16 +127,22 @@
 
         </select>
 
+        <div id="patientError" class="error"></div>
+
 
         <!-- Diagnosis -->
 
         <label>Diagnosis</label>
 
         <textarea
+            id="diagnosis"
             th:field="*{diagnosis}"
             placeholder="Enter diagnosis"
+            maxlength="500"
             required>
         </textarea>
+
+        <div id="diagnosisError" class="error"></div>
 
 
         <!-- Treatment -->
@@ -120,9 +150,13 @@
         <label>Treatment</label>
 
         <textarea
+            id="treatment"
             th:field="*{treatment}"
-            placeholder="Enter treatment">
+            placeholder="Enter treatment"
+            maxlength="1000">
         </textarea>
+
+        <div id="treatmentError" class="error"></div>
 
 
         <!-- Prescription -->
@@ -130,9 +164,13 @@
         <label>Prescription</label>
 
         <textarea
+            id="prescription"
             th:field="*{prescription}"
-            placeholder="Enter prescription">
+            placeholder="Enter prescription"
+            maxlength="1000">
         </textarea>
+
+        <div id="prescriptionError" class="error"></div>
 
 
         <!-- Medical Report -->
@@ -140,9 +178,13 @@
         <label>Medical Report</label>
 
         <textarea
+            id="medicalReport"
             th:field="*{medicalReport}"
-            placeholder="Enter medical report">
+            placeholder="Enter medical report"
+            maxlength="2000">
         </textarea>
+
+        <div id="medicalReportError" class="error"></div>
 
 
         <!-- Save -->
@@ -157,6 +199,8 @@
 
     </form>
 
+
+    <!-- Back -->
 
     <form
         action="/medical-records"
@@ -173,6 +217,107 @@
     </form>
 
 </div>
+
+
+<script>
+
+function validateForm() {
+
+    let valid = true;
+
+    // Get values
+
+    const patient =
+        document.getElementById("patientId").value;
+
+    const diagnosis =
+        document.getElementById("diagnosis").value.trim();
+
+    const treatment =
+        document.getElementById("treatment").value.trim();
+
+    const prescription =
+        document.getElementById("prescription").value.trim();
+
+    const medicalReport =
+        document.getElementById("medicalReport").value.trim();
+
+
+    // Clear previous errors
+
+    document.getElementById("patientError").innerText = "";
+    document.getElementById("diagnosisError").innerText = "";
+    document.getElementById("treatmentError").innerText = "";
+    document.getElementById("prescriptionError").innerText = "";
+    document.getElementById("medicalReportError").innerText = "";
+
+
+    // Patient validation
+
+    if (patient === "") {
+
+        document.getElementById("patientError").innerText =
+            "Please select a patient.";
+
+        valid = false;
+    }
+
+
+    // Diagnosis validation
+
+    if (diagnosis === "") {
+
+        document.getElementById("diagnosisError").innerText =
+            "Diagnosis is required.";
+
+        valid = false;
+
+    } else if (diagnosis.length < 3) {
+
+        document.getElementById("diagnosisError").innerText =
+            "Diagnosis must contain at least 3 characters.";
+
+        valid = false;
+    }
+
+
+    // Treatment validation
+
+    if (treatment.length > 1000) {
+
+        document.getElementById("treatmentError").innerText =
+            "Treatment cannot exceed 1000 characters.";
+
+        valid = false;
+    }
+
+
+    // Prescription validation
+
+    if (prescription.length > 1000) {
+
+        document.getElementById("prescriptionError").innerText =
+            "Prescription cannot exceed 1000 characters.";
+
+        valid = false;
+    }
+
+
+    // Medical report validation
+
+    if (medicalReport.length > 2000) {
+
+        document.getElementById("medicalReportError").innerText =
+            "Medical report cannot exceed 2000 characters.";
+
+        valid = false;
+    }
+
+
+    return valid;
+}
+
+</script>
 
 </body>
 

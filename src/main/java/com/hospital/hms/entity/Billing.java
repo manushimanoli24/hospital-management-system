@@ -1,6 +1,8 @@
 package com.hospital.hms.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -11,21 +13,29 @@ public class Billing {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Patient ID is required")
+    @Min(value = 1, message = "Patient ID must be greater than 0")
     @Column(name = "patient_id", nullable = false)
     private Long patientId;
 
+    @NotBlank(message = "Patient name is required")
     private String patientName;
 
+    @PositiveOrZero(message = "Consultation charge cannot be negative")
     private double consultationCharge;
 
+    @PositiveOrZero(message = "Laboratory charge cannot be negative")
     private double laboratoryCharge;
 
+    @PositiveOrZero(message = "Pharmacy charge cannot be negative")
     private double pharmacyCharge;
 
+    @PositiveOrZero(message = "Admission charge cannot be negative")
     private double admissionCharge;
 
     private double total;
 
+    @PositiveOrZero(message = "Payment cannot be negative")
     private double payment;
 
     private String paymentStatus;
@@ -36,12 +46,10 @@ public class Billing {
     public Billing() {
     }
 
-    // ID
     public Long getId() {
         return id;
     }
 
-    // Patient ID
     public Long getPatientId() {
         return patientId;
     }
@@ -50,7 +58,6 @@ public class Billing {
         this.patientId = patientId;
     }
 
-    // Patient Name
     public String getPatientName() {
         return patientName;
     }
@@ -59,7 +66,6 @@ public class Billing {
         this.patientName = patientName;
     }
 
-    // Consultation Charge
     public double getConsultationCharge() {
         return consultationCharge;
     }
@@ -68,7 +74,6 @@ public class Billing {
         this.consultationCharge = consultationCharge;
     }
 
-    // Laboratory Charge
     public double getLaboratoryCharge() {
         return laboratoryCharge;
     }
@@ -77,7 +82,6 @@ public class Billing {
         this.laboratoryCharge = laboratoryCharge;
     }
 
-    // Pharmacy Charge
     public double getPharmacyCharge() {
         return pharmacyCharge;
     }
@@ -86,7 +90,6 @@ public class Billing {
         this.pharmacyCharge = pharmacyCharge;
     }
 
-    // Admission Charge
     public double getAdmissionCharge() {
         return admissionCharge;
     }
@@ -95,7 +98,6 @@ public class Billing {
         this.admissionCharge = admissionCharge;
     }
 
-    // Total
     public double getTotal() {
         return total;
     }
@@ -104,7 +106,6 @@ public class Billing {
         this.total = total;
     }
 
-    // Payment
     public double getPayment() {
         return payment;
     }
@@ -113,7 +114,6 @@ public class Billing {
         this.payment = payment;
     }
 
-    // Payment Status
     public String getPaymentStatus() {
         return paymentStatus;
     }
@@ -122,7 +122,6 @@ public class Billing {
         this.paymentStatus = paymentStatus;
     }
 
-    // Billing Date
     public LocalDate getBillingDate() {
         return billingDate;
     }

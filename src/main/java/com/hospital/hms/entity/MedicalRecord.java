@@ -1,6 +1,8 @@
 package com.hospital.hms.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -11,20 +13,28 @@ public class MedicalRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Patient is required")
+    @Min(value = 1, message = "Patient ID must be greater than 0")
     private Long patientId;
 
+    @NotBlank(message = "Diagnosis is required")
+    @Size(max = 1000, message = "Diagnosis cannot exceed 1000 characters")
     @Column(columnDefinition = "TEXT")
     private String diagnosis;
 
+    @Size(max = 2000, message = "Treatment cannot exceed 2000 characters")
     @Column(columnDefinition = "TEXT")
     private String treatment;
 
+    @Size(max = 2000, message = "Prescription cannot exceed 2000 characters")
     @Column(columnDefinition = "TEXT")
     private String prescription;
 
+    @Size(max = 5000, message = "Medical report cannot exceed 5000 characters")
     @Column(columnDefinition = "TEXT")
     private String medicalReport;
 
+    @NotNull(message = "Record date is required")
     private LocalDate recordDate;
 
     public MedicalRecord() {

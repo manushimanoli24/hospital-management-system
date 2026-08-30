@@ -3,8 +3,11 @@ package com.hospital.hms.controller;
 import com.hospital.hms.entity.Billing;
 import com.hospital.hms.repository.BillingRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,10 +22,7 @@ public class BillingController {
         this.billingRepository = billingRepository;
     }
 
-    // ==============================
     // Billing List
-    // ==============================
-
     @GetMapping
     public String billing(Model model) {
 
@@ -34,17 +34,12 @@ public class BillingController {
         return "billing";
     }
 
-
-    // ==============================
     // Add Billing Page
-    // ==============================
-
     @GetMapping("/add")
     public String addBilling(Model model) {
 
         Billing billing = new Billing();
 
-        // Automatically set today's date
         billing.setBillingDate(LocalDate.now());
 
         model.addAttribute(
@@ -55,17 +50,18 @@ public class BillingController {
         return "add-billing";
     }
 
-
-    // ==============================
     // Save Billing
-    // ==============================
-
     @PostMapping("/save")
     public String saveBilling(
-            @ModelAttribute Billing billing) {
+            @Valid @ModelAttribute("billing") Billing billing,
+            BindingResult result) {
 
-        // If billing date is empty,
-        // automatically use today's date
+        // Check validation errors
+        if (result.hasErrors()) {
+            return "add-billing";
+        }
+
+        // Set today's date if empty
         if (billing.getBillingDate() == null) {
             billing.setBillingDate(LocalDate.now());
         }
@@ -78,7 +74,6 @@ public class BillingController {
                 + billing.getAdmissionCharge();
 
         billing.setTotal(total);
-
 
         // Calculate payment status
         if (billing.getPayment() >= total) {
@@ -94,17 +89,12 @@ public class BillingController {
             billing.setPaymentStatus("UNPAID");
         }
 
-
         billingRepository.save(billing);
 
         return "redirect:/billing";
     }
 
-
-    // ==============================
     // View Receipt
-    // ==============================
-
     @GetMapping("/receipt/{id}")
     public String receipt(
             @PathVariable Long id,
@@ -125,11 +115,7 @@ public class BillingController {
         return "billing-receipt";
     }
 
-
-    // ==============================
     // Edit Bill
-    // ==============================
-
     @GetMapping("/edit/{id}")
     public String editBilling(
             @PathVariable Long id,
@@ -150,16 +136,17 @@ public class BillingController {
         return "edit-billing";
     }
 
-
-    // ==============================
     // Update Bill
-    // ==============================
-
     @PostMapping("/update")
     public String updateBilling(
-            @ModelAttribute Billing billing) {
+            @Valid @ModelAttribute("billing") Billing billing,
+            BindingResult result) {
 
-        // Find existing bill
+        // Check validation errors
+        if (result.hasErrors()) {
+            return "edit-billing";
+        }
+
         Billing existingBilling =
                 billingRepository.findById(billing.getId())
                         .orElse(null);
@@ -168,58 +155,40 @@ public class BillingController {
             return "redirect:/billing";
         }
 
-
-        // Keep Patient ID
         existingBilling.setPatientId(
                 billing.getPatientId()
         );
 
-
-        // Update Patient Name
         existingBilling.setPatientName(
                 billing.getPatientName()
         );
 
-
-        // Update Consultation Charge
         existingBilling.setConsultationCharge(
                 billing.getConsultationCharge()
         );
 
-
-        // Update Laboratory Charge
         existingBilling.setLaboratoryCharge(
                 billing.getLaboratoryCharge()
         );
 
-
-        // Update Pharmacy Charge
         existingBilling.setPharmacyCharge(
                 billing.getPharmacyCharge()
         );
 
-
-        // Update Admission Charge
         existingBilling.setAdmissionCharge(
                 billing.getAdmissionCharge()
         );
 
-
-        // Update Payment
         existingBilling.setPayment(
                 billing.getPayment()
         );
 
-
-        // Keep existing billing date
-        // Only update it if a date was supplied
         if (billing.getBillingDate() != null) {
 
             existingBilling.setBillingDate(
                     billing.getBillingDate()
             );
         }
-
 
         // Calculate total again
         double total =
@@ -229,7 +198,6 @@ public class BillingController {
                 + existingBilling.getAdmissionCharge();
 
         existingBilling.setTotal(total);
-
 
         // Update payment status
         if (existingBilling.getPayment() >= total) {
@@ -245,18 +213,12 @@ public class BillingController {
             existingBilling.setPaymentStatus("UNPAID");
         }
 
-
-        // Save existing bill
         billingRepository.save(existingBilling);
 
         return "redirect:/billing";
     }
 
-
-    // ==============================
     // Delete Bill
-    // ==============================
-
     @GetMapping("/delete/{id}")
     public String deleteBilling(
             @PathVariable Long id) {

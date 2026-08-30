@@ -19,10 +19,12 @@
             background-color: white;
             padding: 30px;
             border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         h1 {
             text-align: center;
+            margin-bottom: 30px;
         }
 
         label {
@@ -36,9 +38,22 @@
             padding: 10px;
             margin-top: 5px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
-        button {
+        input:focus {
+            border-color: #2563eb;
+            outline: none;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .book-button {
             width: 100%;
             padding: 12px;
             margin-top: 25px;
@@ -47,6 +62,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+        }
+
+        .book-button:hover {
+            background-color: #1d4ed8;
         }
 
         .back-button {
@@ -55,6 +75,10 @@
             margin-top: 15px;
             text-decoration: none;
             color: #2563eb;
+        }
+
+        .back-button:hover {
+            text-decoration: underline;
         }
 
     </style>
@@ -82,7 +106,15 @@
             type="number"
             th:field="*{patientId}"
             min="1"
-            required>
+            required
+            placeholder="Enter Patient ID">
+
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('patientId')}"
+            th:errors="*{patientId}">
+        </div>
+
 
         <!-- Patient Name -->
 
@@ -93,9 +125,17 @@
         <input
             type="text"
             th:field="*{patientName}"
-            required>
+            required
+            placeholder="Enter Patient Name">
 
-        <!-- Consultation -->
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('patientName')}"
+            th:errors="*{patientName}">
+        </div>
+
+
+        <!-- Consultation Charge -->
 
         <label>
             Consultation Charge
@@ -106,9 +146,17 @@
             th:field="*{consultationCharge}"
             min="0"
             step="0.01"
-            required>
+            required
+            placeholder="Enter consultation charge">
 
-        <!-- Laboratory -->
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('consultationCharge')}"
+            th:errors="*{consultationCharge}">
+        </div>
+
+
+        <!-- Laboratory Charge -->
 
         <label>
             Laboratory Charge
@@ -119,9 +167,17 @@
             th:field="*{laboratoryCharge}"
             min="0"
             step="0.01"
-            required>
+            required
+            placeholder="Enter laboratory charge">
 
-        <!-- Pharmacy -->
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('laboratoryCharge')}"
+            th:errors="*{laboratoryCharge}">
+        </div>
+
+
+        <!-- Pharmacy Charge -->
 
         <label>
             Pharmacy Charge
@@ -132,9 +188,17 @@
             th:field="*{pharmacyCharge}"
             min="0"
             step="0.01"
-            required>
+            required
+            placeholder="Enter pharmacy charge">
 
-        <!-- Admission -->
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('pharmacyCharge')}"
+            th:errors="*{pharmacyCharge}">
+        </div>
+
+
+        <!-- Admission Charge -->
 
         <label>
             Admission Charge
@@ -145,7 +209,15 @@
             th:field="*{admissionCharge}"
             min="0"
             step="0.01"
-            required>
+            required
+            placeholder="Enter admission charge">
+
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('admissionCharge')}"
+            th:errors="*{admissionCharge}">
+        </div>
+
 
         <!-- Payment -->
 
@@ -158,16 +230,37 @@
             th:field="*{payment}"
             min="0"
             step="0.01"
-            required>
+            required
+            placeholder="Enter payment amount">
 
-        <button type="submit">
-            Create Bill
+        <div
+            class="error"
+            th:if="${#fields.hasErrors('payment')}"
+            th:errors="*{payment}">
+        </div>
+
+
+        <!-- Submit -->
+
+        <button
+            type="submit"
+            class="book-button">
+
+            💳 Create Bill
+
         </button>
 
     </form>
 
-    <a href="/billing" class="back-button">
+
+    <!-- Back to Billing -->
+
+    <a
+        href="/billing"
+        class="back-button">
+
         ← Back to Billing
+
     </a>
 
 </div>

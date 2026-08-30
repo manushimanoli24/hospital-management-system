@@ -4,8 +4,11 @@ import com.hospital.hms.entity.MedicalRecord;
 import com.hospital.hms.repository.MedicalRecordRepository;
 import com.hospital.hms.repository.PatientRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,11 +28,7 @@ public class MedicalRecordController {
         this.patientRepository = patientRepository;
     }
 
-
-    // ==============================
-    // Medical Records List
-    // ==============================
-
+    // Medical Records list
     @GetMapping
     public String medicalRecords(Model model) {
 
@@ -41,11 +40,7 @@ public class MedicalRecordController {
         return "medical-records";
     }
 
-
-    // ==============================
-    // Add Medical Record Page
-    // ==============================
-
+    // Add Medical Record page
     @GetMapping("/add")
     public String addMedicalRecord(Model model) {
 
@@ -66,91 +61,29 @@ public class MedicalRecordController {
         return "add-medical-record";
     }
 
-
-    // ==============================
     // Save Medical Record
-    // ==============================
-
     @PostMapping("/save")
     public String saveMedicalRecord(
-            @ModelAttribute MedicalRecord medicalRecord) {
+            @Valid @ModelAttribute("medicalRecord") MedicalRecord medicalRecord,
+            BindingResult result,
+            Model model) {
+
+        // Check validation errors
+        if (result.hasErrors()) {
+
+            model.addAttribute(
+                    "patients",
+                    patientRepository.findAll()
+            );
+
+            return "add-medical-record";
+        }
 
         if (medicalRecord.getRecordDate() == null) {
             medicalRecord.setRecordDate(LocalDate.now());
         }
 
         medicalRecordRepository.save(medicalRecord);
-
-        return "redirect:/medical-records";
-    }
-
-
-    // ==============================
-    // View Medical Record
-    // ==============================
-
-    @GetMapping("/view/{id}")
-    public String viewMedicalRecord(
-            @PathVariable Long id,
-            Model model) {
-
-        MedicalRecord medicalRecord =
-                medicalRecordRepository.findById(id)
-                        .orElseThrow(
-                                () -> new IllegalArgumentException(
-                                        "Invalid medical record ID: " + id
-                                )
-                        );
-
-        model.addAttribute(
-                "medicalRecord",
-                medicalRecord
-        );
-
-        return "view-medical-record";
-    }
-
-
-    // ==============================
-    // Edit Medical Record Page
-    // ==============================
-
-    @GetMapping("/edit/{id}")
-    public String editMedicalRecord(
-            @PathVariable Long id,
-            Model model) {
-
-        MedicalRecord medicalRecord =
-                medicalRecordRepository.findById(id)
-                        .orElseThrow(
-                                () -> new IllegalArgumentException(
-                                        "Invalid medical record ID: " + id
-                                )
-                        );
-
-        model.addAttribute(
-                "medicalRecord",
-                medicalRecord
-        );
-
-        model.addAttribute(
-                "patients",
-                patientRepository.findAll()
-        );
-
-        return "edit-medical-record";
-    }
-
-
-    // ==============================
-    // Delete Medical Record
-    // ==============================
-
-    @GetMapping("/delete/{id}")
-    public String deleteMedicalRecord(
-            @PathVariable Long id) {
-
-        medicalRecordRepository.deleteById(id);
 
         return "redirect:/medical-records";
     }
