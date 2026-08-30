@@ -42,6 +42,16 @@
             box-sizing: border-box;
         }
 
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .input-error {
+            border: 1px solid #dc2626;
+        }
+
         .book-button {
             width: 100%;
             margin-top: 25px;
@@ -71,92 +81,150 @@
 
 <div class="container">
 
-    <h1>Add Appointment</h1>
+    <h1>📅 Add Appointment</h1>
 
     <form
-        th:action="@{/appointments/book}"
-        th:object="${appointment}"
-        method="post">
+            th:action="@{/appointments/book}"
+            th:object="${appointment}"
+            method="post">
+
+        <!-- Patient -->
 
         <label>Patient</label>
 
-        <select th:field="*{patientId}" required>
+        <select
+                th:field="*{patientId}"
+                th:classappend="${#fields.hasErrors('patientId')} ? 'input-error'">
 
-            <option value="">Select Patient</option>
+            <option value="">
+                Select Patient
+            </option>
 
             <option
-                th:each="patient : ${patients}"
-                th:value="${patient.id}"
-                th:text="${patient.firstName + ' ' + patient.lastName}">
+                    th:each="patient : ${patients}"
+                    th:value="${patient.id}"
+                    th:text="${patient.firstName + ' ' + patient.lastName}">
             </option>
 
         </select>
 
+        <div
+                class="error"
+                th:if="${#fields.hasErrors('patientId')}"
+                th:errors="*{patientId}">
+        </div>
+
+
+        <!-- Doctor -->
 
         <label>Doctor</label>
 
-        <select th:field="*{doctorId}" required>
+        <select
+                th:field="*{doctorId}"
+                th:classappend="${#fields.hasErrors('doctorId')} ? 'input-error'">
 
-            <option value="">Select Doctor</option>
+            <option value="">
+                Select Doctor
+            </option>
 
             <option
-                th:each="doctor : ${doctors}"
-                th:value="${doctor.id}"
-                th:text="${doctor.firstName + ' ' + doctor.lastName}">
+                    th:each="doctor : ${doctors}"
+                    th:value="${doctor.id}"
+                    th:text="${doctor.firstName + ' ' + doctor.lastName}">
             </option>
 
         </select>
 
+        <div
+                class="error"
+                th:if="${#fields.hasErrors('doctorId')}"
+                th:errors="*{doctorId}">
+        </div>
+
+
+        <!-- Department -->
 
         <label>Department</label>
 
-        <select th:field="*{departmentId}" required>
+        <select
+                th:field="*{departmentId}"
+                th:classappend="${#fields.hasErrors('departmentId')} ? 'input-error'">
 
-            <option value="">Select Department</option>
+            <option value="">
+                Select Department
+            </option>
 
             <option
-                th:each="department : ${departments}"
-                th:value="${department.id}"
-                th:text="${department.name}">
+                    th:each="department : ${departments}"
+                    th:value="${department.id}"
+                    th:text="${department.name}">
             </option>
 
         </select>
 
+        <div
+                class="error"
+                th:if="${#fields.hasErrors('departmentId')}"
+                th:errors="*{departmentId}">
+        </div>
 
-        <label>Date</label>
+
+        <!-- Date -->
+
+        <label>Appointment Date</label>
 
         <input
-            type="date"
-            th:field="*{appointmentDate}"
-            required>
+                type="date"
+                th:field="*{appointmentDate}"
+                th:classappend="${#fields.hasErrors('appointmentDate')} ? 'input-error'">
+
+        <div
+                class="error"
+                th:if="${#fields.hasErrors('appointmentDate')}"
+                th:errors="*{appointmentDate}">
+        </div>
 
 
-        <label>Time</label>
+        <!-- Time -->
+
+        <label>Appointment Time</label>
 
         <input
-            type="time"
-            th:field="*{appointmentTime}"
-            required>
+                type="time"
+                th:field="*{appointmentTime}"
+                th:classappend="${#fields.hasErrors('appointmentTime')} ? 'input-error'">
 
+        <div
+                class="error"
+                th:if="${#fields.hasErrors('appointmentTime')}"
+                th:errors="*{appointmentTime}">
+        </div>
+
+
+        <!-- Submit -->
 
         <button
-            type="submit"
-            class="book-button">
+                type="submit"
+                class="book-button">
 
-            Book Appointment
+            📅 Book Appointment
 
         </button>
 
     </form>
 
 
-    <form action="/appointments" method="get">
+    <!-- Back -->
+
+    <form
+            action="/appointments"
+            method="get">
 
         <button
-            type="submit"
-            class="back-button">
+                type="submit"
+                class="back-button">
 
-            Back to Appointments
+            ← Back to Appointments
 
         </button>
 

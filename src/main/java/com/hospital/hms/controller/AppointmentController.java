@@ -6,8 +6,11 @@ import com.hospital.hms.repository.PatientRepository;
 import com.hospital.hms.repository.DoctorRepository;
 import com.hospital.hms.repository.DepartmentRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -70,10 +73,32 @@ public class AppointmentController {
         return "add-appointment";
     }
 
-    // Book appointment
+    // Book appointment with validation
     @PostMapping("/book")
     public String bookAppointment(
-            @ModelAttribute Appointment appointment) {
+            @Valid @ModelAttribute("appointment") Appointment appointment,
+            BindingResult bindingResult,
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute(
+                    "patients",
+                    patientRepository.findAll()
+            );
+
+            model.addAttribute(
+                    "doctors",
+                    doctorRepository.findAll()
+            );
+
+            model.addAttribute(
+                    "departments",
+                    departmentRepository.findAll()
+            );
+
+            return "add-appointment";
+        }
 
         appointment.setStatus("BOOKED");
 
