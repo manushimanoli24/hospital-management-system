@@ -82,7 +82,6 @@
             color: #1e3a5f;
         }
 
-        /* Validation error message */
         .error {
             color: #d32f2f;
             font-size: 13px;
@@ -90,12 +89,10 @@
             display: block;
         }
 
-        /* Highlight invalid fields */
         .input-error {
             border: 1px solid #d32f2f;
         }
 
-        /* Validation summary */
         .error-summary {
             background: #ffe6e6;
             border: 1px solid #d32f2f;
@@ -117,25 +114,21 @@
 
 </div>
 
-
 <div class="container">
 
     <h2>Edit Patient</h2>
-
-
-    <!-- Validation Summary -->
-    <div class="error-summary"
-         th:if="${#fields.hasAnyErrors()}">
-
-        Please correct the errors below before updating the patient.
-
-    </div>
-
 
     <form th:action="@{/patients/edit/{id}(id=${patient.id})}"
           th:object="${patient}"
           method="post">
 
+        <!-- Validation Summary -->
+        <div class="error-summary"
+             th:if="${#fields.hasAnyErrors()}">
+
+            Please correct the errors below before updating the patient.
+
+        </div>
 
         <!-- First Name -->
         <div class="form-group">
@@ -156,7 +149,6 @@
 
         </div>
 
-
         <!-- Last Name -->
         <div class="form-group">
 
@@ -176,7 +168,6 @@
 
         </div>
 
-
         <!-- Phone -->
         <div class="form-group">
 
@@ -195,7 +186,6 @@
             </span>
 
         </div>
-
 
         <!-- Gender -->
         <div class="form-group">
@@ -222,7 +212,6 @@
 
         </div>
 
-
         <!-- Date of Birth -->
         <div class="form-group">
 
@@ -241,7 +230,6 @@
             </span>
 
         </div>
-
 
         <!-- Address -->
         <div class="form-group">
@@ -262,7 +250,6 @@
 
         </div>
 
-
         <!-- Email -->
         <div class="form-group">
 
@@ -282,7 +269,6 @@
 
         </div>
 
-
         <!-- Medical History -->
         <div class="form-group">
 
@@ -300,7 +286,6 @@
             </span>
 
         </div>
-
 
         <!-- Buttons -->
         <button type="submit">

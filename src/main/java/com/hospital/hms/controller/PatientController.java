@@ -2,8 +2,10 @@ package com.hospital.hms.controller;
 
 import com.hospital.hms.entity.Patient;
 import com.hospital.hms.service.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -40,9 +42,15 @@ public class PatientController {
         return "add-patient";
     }
 
-    // Save new patient
+    // Save new patient with validation
     @PostMapping("/patients/add")
-    public String addPatient(@ModelAttribute Patient patient) {
+    public String addPatient(
+            @Valid @ModelAttribute("patient") Patient patient,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "add-patient";
+        }
 
         patientService.savePatient(patient);
 
@@ -67,11 +75,16 @@ public class PatientController {
         return "edit-patient";
     }
 
-    // Update patient
+    // Update patient with validation
     @PostMapping("/patients/edit/{id}")
     public String updatePatient(
             @PathVariable Long id,
-            @ModelAttribute Patient patient) {
+            @Valid @ModelAttribute("patient") Patient patient,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "edit-patient";
+        }
 
         patient.setId(id);
 
@@ -107,4 +120,3 @@ public class PatientController {
         return "redirect:/patients";
     }
 }
-
